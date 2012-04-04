@@ -61,8 +61,6 @@
 		7C767A191518CA1B00C004A8 /* decSingle.c in Sources */ = {isa = PBXBuildFile; fileRef = 7C7679E41518CA1B00C004A8 /* decSingle.c */; };
 		7C767A1A1518CA1B00C004A8 /* decSingle.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7679E51518CA1B00C004A8 /* decSingle.h */; };
 		7C767A1B1518CA1B00C004A8 /* decSingle.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7679E51518CA1B00C004A8 /* decSingle.h */; };
-		7C767A2D1518CA2800C004A8 /* decnumber.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 7C767A2C1518CA2800C004A8 /* decnumber.hpp */; };
-		7C767A2E1518CA2800C004A8 /* decnumber.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 7C767A2C1518CA2800C004A8 /* decnumber.hpp */; };
 		7C767A301518CA4300C004A8 /* decnumber_checks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C767A2F1518CA4300C004A8 /* decnumber_checks.cpp */; };
 		7C767A311518CA4300C004A8 /* decnumber_checks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C767A2F1518CA4300C004A8 /* decnumber_checks.cpp */; };
 		7C9587981518E11000A759A5 /* decimal in Headers */ = {isa = PBXBuildFile; fileRef = 7C9587971518E10F00A759A5 /* decimal */; };
@@ -111,7 +109,6 @@
 		7C7679E51518CA1B00C004A8 /* decSingle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = decSingle.h; path = decNumber/decSingle.h; sourceTree = "<group>"; };
 		7C7679EE1518CA1B00C004A8 /* ICU-license.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = "ICU-license.html"; path = "decNumber/ICU-license.html"; sourceTree = "<group>"; };
 		7C7679EF1518CA1B00C004A8 /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = readme.txt; path = decNumber/readme.txt; sourceTree = "<group>"; };
-		7C767A2C1518CA2800C004A8 /* decnumber.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = decnumber.hpp; sourceTree = "<group>"; };
 		7C767A2F1518CA4300C004A8 /* decnumber_checks.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = decnumber_checks.cpp; sourceTree = "<group>"; };
 		7C9587971518E10F00A759A5 /* decimal */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = decimal; sourceTree = "<group>"; };
 		7C9587C01518FA7800A759A5 /* decnumberfunc.x.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = decnumberfunc.x.hpp; sourceTree = "<group>"; };
@@ -142,7 +139,6 @@
 			children = (
 				7C116B69152AFE0C005B74F5 /* readme.html */,
 				7C9587971518E10F00A759A5 /* decimal */,
-				7C767A2C1518CA2800C004A8 /* decnumber.hpp */,
 				7C9587C01518FA7800A759A5 /* decnumberfunc.x.hpp */,
 				7C767A2F1518CA4300C004A8 /* decnumber_checks.cpp */,
 				7CDCA23F151C7B5100BA232B /* decnumber_funcs.cpp */,
@@ -218,7 +214,6 @@
 				7C767A121518CA1B00C004A8 /* decPacked.h in Headers */,
 				7C767A161518CA1B00C004A8 /* decQuad.h in Headers */,
 				7C767A1A1518CA1B00C004A8 /* decSingle.h in Headers */,
-				7C767A2D1518CA2800C004A8 /* decnumber.hpp in Headers */,
 				7C9587981518E11000A759A5 /* decimal in Headers */,
 				7C9587C11518FA7800A759A5 /* decnumberfunc.x.hpp in Headers */,
 				7C6CFA921529ADEF001259BF /* decnumber_test_gen.x.hpp in Headers */,
@@ -240,7 +235,6 @@
 				7C767A131518CA1B00C004A8 /* decPacked.h in Headers */,
 				7C767A171518CA1B00C004A8 /* decQuad.h in Headers */,
 				7C767A1B1518CA1B00C004A8 /* decSingle.h in Headers */,
-				7C767A2E1518CA2800C004A8 /* decnumber.hpp in Headers */,
 				7C9587991518E11000A759A5 /* decimal in Headers */,
 				7C9587C21518FA7800A759A5 /* decnumberfunc.x.hpp in Headers */,
 				7C6CFA931529ADEF001259BF /* decnumber_test_gen.x.hpp in Headers */,
