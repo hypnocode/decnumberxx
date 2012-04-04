@@ -1,0 +1,1800 @@
+/*------------------------------------------------------------------------------
+
+decnumberxx
+
+Copyright (c) 2012, Hypnocode GmbH
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+1. Redistributions of source code must retain the above copyright
+   notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+3. All advertising materials mentioning features or use of this software
+   must display the following acknowledgement:
+   This product includes software developed by the Hypnocode GmbH.
+4. Neither the name of Hypnocode GmbH nor the names of its contributors may
+   be used to endorse or promote products derived from this software without
+   specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY HYPNOCODE GMBH ''AS IS'' AND ANY
+EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL HYPNOCODE GMBH BE LIABLE FOR ANY
+DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+------------------------------------------------------------------------------*/
+
+#ifndef __decnumberxx_decimal__
+#define __decnumberxx_decimal__
+
+#include <string>
+#include <sstream>
+#include <iostream>
+#include <cstdint>
+#include <cmath>
+#include <limits>
+#include <cassert>
+#include <iosfwd>
+#include <locale>
+
+#ifndef __decnumber__impl__
+
+// generate forward extern "C" declarations
+#define dectype Single
+#define gen_extern_c_declarations
+#include "decnumberfunc.x.hpp"
+
+#define dectype Double
+#define gen_extern_c_declarations
+#include "decnumberfunc.x.hpp"
+
+#define dectype Quad
+#define gen_extern_c_declarations
+#include "decnumberfunc.x.hpp"
+
+#endif // __decnumber__impl__
+
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - 
+// <cfenv> header extension
+
+
+// see decContext.h and N2849 3.5.2
+#define FE_DEC_DOWNWARD				(6)		// DEC_ROUND_FLOOR
+#define FE_DEC_TONEAREST			(3)		// DEC_ROUND_HALF_EVEN
+// #define FE_DEC_TONEARESTFROMZERO	()		// missing
+#define FE_DEC_TOWARD_ZERO			(5)		// DEC_ROUND_DOWN
+#define FE_DEC_UPWARD				(0)		// DEC_ROUND_CEILING
+
+
+namespace std
+{
+namespace decimal
+{
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+template <int T> struct decnumber_traits
+{
+  static constexpr size_t byte_len = 0;
+  static constexpr int    bits = 0;
+};
+
+template <int T> struct decnumber_funcs;
+
+struct decnumber_context_base;
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - 
+// see decSingle.h
+template <> struct decnumber_traits<32>
+{
+  static constexpr int      bits		= 32;
+  static constexpr size_t	byte_len	= bits / 8;	// length
+  static constexpr int		pmax		= 7;		// maximum precision (digits)
+  static constexpr int		emin		= -95;		// minimum adjusted exponent
+  static constexpr int		emax		= 96;		// maximum adjusted exponent
+  static constexpr int		emaxd		= 3;		// maximum exponent digits
+  static constexpr int		bias		= 101;		// bias for the exponent
+  static constexpr size_t   max_strlen	= 16;		// maximum string length, +1
+  static constexpr int 		econl		= 6;		// exponent continuation length
+  static constexpr int      declets		= 2;		// count of declets
+  static constexpr int      ehigh		= emax + bias - (pmax - 1);	// highest biased exponent (Elimit-1)
+  
+  static constexpr uint32_t	sign_mask	= 0x80000000;
+  static constexpr uint32_t nan_mask	= 0x7c000000;
+  static constexpr uint32_t qnan_mask	= 0x7c000000;
+  static constexpr uint32_t snan_mask	= 0x7e000000;
+  static constexpr uint32_t inf_mask	= 0x78000000;
+  static constexpr uint32_t minsp_mask	= 0x78000000;
+};
+
+#ifndef __decnumber__impl__
+template <> struct decnumber_funcs<32>
+{
+#define dectype Single
+#define gen_cpp_wrappers
+#include "decnumberfunc.x.hpp"
+};
+#endif
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - 
+// see decDouble.h
+template <> struct decnumber_traits<64>
+{
+  static constexpr int		bits		= 64;
+  static constexpr size_t	byte_len	= bits / 8;	// length
+  static constexpr int		pmax		= 16;		// maximum precision (digits)
+  static constexpr int		emin		= -383;		// minimum adjusted exponent
+  static constexpr int		emax		= 384;		// maximum adjusted exponent
+  static constexpr int		emaxd		= 3;		// maximum exponent digits
+  static constexpr int		bias		= 398;		// bias for the exponent
+  static constexpr size_t   max_strlen	= 25;		// maximum string length, +1
+  static constexpr int 		econl		= 8;		// exponent continuation length
+  static constexpr int      declets		= 5;		// count of declets
+  static constexpr int      ehigh		= emax + bias - (pmax - 1);	// highest biased exponent (Elimit-1)
+
+  static constexpr uint32_t	sign_mask	= 0x80000000;
+  static constexpr uint32_t nan_mask	= 0x7c000000;
+  static constexpr uint32_t qnan_mask	= 0x7c000000;
+  static constexpr uint32_t snan_mask	= 0x7e000000;
+  static constexpr uint32_t inf_mask	= 0x78000000;
+  static constexpr uint32_t minsp_mask	= 0x78000000;
+};
+
+#ifndef __decnumber__impl__
+template <> struct decnumber_funcs<64>
+{
+#define dectype Double
+#define gen_cpp_wrappers
+#include "decnumberfunc.x.hpp"
+};
+#endif
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - 
+// see decQuad.h
+template <> struct decnumber_traits<128>
+{
+  static constexpr int		bits		= 128;
+  static constexpr size_t	byte_len	= bits / 8;	// length
+  static constexpr int		pmax		= 34;		// maximum precision (digits)
+  static constexpr int		emin		= -6143;	// minimum adjusted exponent
+  static constexpr int		emax		= 6144;		// maximum adjusted exponent
+  static constexpr int		emaxd		= 4;		// maximum exponent digits
+  static constexpr int		bias		= 6176;		// bias for the exponent
+  static constexpr size_t   max_strlen	= 43;		// maximum string length, +1
+  static constexpr int 		econl		= 12;		// exponent continuation length
+  static constexpr int      declets		= 11;		// count of declets
+  static constexpr int      ehigh		= emax + bias - (pmax - 1);	// highest biased exponent (Elimit-1)
+
+  static constexpr uint32_t	sign_mask	= 0x80000000;
+  static constexpr uint32_t nan_mask	= 0x7c000000;
+  static constexpr uint32_t qnan_mask	= 0x7c000000;
+  static constexpr uint32_t snan_mask	= 0x7e000000;
+  static constexpr uint32_t inf_mask	= 0x78000000;
+  static constexpr uint32_t minsp_mask	= 0x78000000;
+};
+
+#ifndef __decnumber__impl__
+template <> struct decnumber_funcs<128>
+{
+#define dectype Quad
+#define gen_cpp_wrappers
+#include "decnumberfunc.x.hpp"
+};
+#endif
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - 
+// promotion / demotion
+// decNumber lib implements only one-step promotion/demotion, that's why
+// we need to have this stuff here.
+template <int SRC_T, int DST_T> struct decnumber_promote_demote
+{
+  static void convert (void* dst, const void* src, void* ctx) noexcept;
+};
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - 
+template <int T> struct decnumber_context
+{
+  static_assert (decnumber_traits<T>::byte_len > 0, "unsupported decimal number width");
+
+  int32_t digits = decnumber_traits<T>::pmax;
+  int32_t emax = decnumber_traits<T>::emax;
+  int32_t emin = decnumber_traits<T>::emin;
+  int32_t round = FE_DEC_TONEAREST;
+  uint32_t traps = 0;
+  uint32_t status = 0;
+  uint8_t clamp = 1;
+};
+
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - 
+//
+
+template <int T> class decnumber
+{
+public:
+  static constexpr int		bits		= decnumber_traits<T>::bits;
+  static constexpr size_t	byte_len	= decnumber_traits<T>::byte_len;
+  static constexpr size_t	word_len	= byte_len / sizeof (uint32_t);
+  static constexpr int		pmax		= decnumber_traits<T>::pmax;
+  static constexpr int		emin		= decnumber_traits<T>::emin;
+  static constexpr int		emax		= decnumber_traits<T>::emax;
+  static constexpr int		emaxd		= decnumber_traits<T>::emaxd;
+  static constexpr int		bias		= decnumber_traits<T>::bias;
+  static constexpr size_t   max_strlen	= decnumber_traits<T>::max_strlen;
+  static constexpr int 		econl		= decnumber_traits<T>::econl;
+  static constexpr int      declets		= decnumber_traits<T>::declets;
+  static constexpr int      ehigh		= decnumber_traits<T>::ehigh;
+  
+  static constexpr uint32_t	sign_mask	= decnumber_traits<T>::sign_mask;
+  static constexpr uint32_t	nan_mask	= decnumber_traits<T>::nan_mask;
+  static constexpr uint32_t	qnan_mask	= decnumber_traits<T>::qnan_mask;
+  static constexpr uint32_t	snan_mask	= decnumber_traits<T>::snan_mask;
+  static constexpr uint32_t	inf_mask	= decnumber_traits<T>::inf_mask;
+  static constexpr uint32_t	minsp_mask	= decnumber_traits<T>::minsp_mask;
+
+  using context = decnumber_context<T>;
+  using funcs = decnumber_funcs<T>;
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // some static constants
+  // we can't initialize them here, because the template class is incomplete
+  static const decnumber __const_one;
+  static const decnumber __const_two;
+  static const decnumber __const_zero;
+  static const decnumber __const_int32_max;
+  static const decnumber __const_uint32_max;
+  static const decnumber __const_uint32_max_plus_one;
+
+  static const decnumber __const_e;
+  static const decnumber __const_ten;
+  static const decnumber __const_emin;
+
+  static const decnumber __const_quiet_NaN;
+  static const decnumber __const_signaling_NaN;
+
+  // these are calculated and thus require runtime functions, which is not
+  // safe to do in static initializers.  that's why we use functions and 
+  // static vars...  
+  static const decnumber& __const_epsilon		(void) noexcept;
+  static const decnumber& __const_round_error	(void) noexcept;
+  static const decnumber& __const_infinity		(void) noexcept;
+  static const decnumber& __const_denorm_min	(void) noexcept;
+
+  static const decnumber& __const_min			(void) noexcept;
+  static const decnumber& __const_lowest		(void) noexcept;
+  static const decnumber& __const_max			(void) noexcept;
+
+private:
+  uint32_t storage_words[word_len];
+
+  static_assert (decnumber_traits<T>::byte_len > 0, "unsupported decimal number width");
+
+
+  // endian dependent word access
+  #ifdef __LITTLE_ENDIAN__
+  uint32_t& word (int i) noexcept
+  {
+    return storage_words[word_len - 1 - i];
+  }
+  const uint32_t& word (int i) const noexcept
+  {
+    return storage_words[word_len - 1 - i];
+  }
+  #endif
+  
+  #ifdef __BIG_ENDIAN__
+  uint32_t& word (int i) noexcept
+  {
+    return storage_words[i];
+  }
+  const uint32_t& word (int i) const noexcept
+  {
+    return storage_words[i];
+  }
+  #endif
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // generic converter that goes through strings
+  
+  template <typename X, typename Enable = void> struct convert_from;
+  template <typename X, typename Enable = void> struct convert_to;
+	
+  template <typename X>
+  struct convert_from<X,
+    typename std::enable_if<std::is_floating_point<X>::value
+							|| (std::is_integral<X>::value 
+							    && (std::numeric_limits<X>::digits > 32))>::type>
+	{
+		static void convert (const X& x, void* n)
+		{
+			context ctx;
+			std::stringstream stream;
+			stream.precision (pmax);
+			
+			stream << x;
+			
+			funcs::FromString (n, stream.str ().c_str (), &ctx);
+		}
+	};
+	
+	template <typename X>
+	struct convert_to<X,
+	  typename std::enable_if<std::is_floating_point<X>::value
+							  || std::is_integral<X>::value>::type>
+	{
+		static X convert (const void* n)
+		{
+			std::stringstream x;
+			char str[max_strlen + 8];
+			funcs::ToString (n, str); 
+			X res;
+			
+			x << str; 
+			x >> res;
+			return res;
+		}
+	};
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // integer converter
+  template <typename X, typename Enable = void> struct int_conv;
+
+  template <typename X>
+  struct int_conv<X, 
+    typename std::enable_if<std::is_integral<X>::value
+							&& std::is_signed<X>::value
+							&& std::numeric_limits<X>::digits <= std::numeric_limits<int32_t>::digits >::type >
+  {
+    static int32_t to_int (const decnumber& n, void* ctx, int32_t rounding_mode) noexcept
+	{
+	  return funcs::ToInt32 (&n, ctx, rounding_mode);
+	}
+	
+	static void from_int (decnumber& n, X x) noexcept
+	{
+	  funcs::FromInt32 (&n, static_cast<int32_t> (x));
+	}
+  };
+
+  template <typename X>
+  struct int_conv<X, 
+    typename std::enable_if<std::is_integral<X>::value 
+							&& std::is_unsigned<X>::value
+							&& std::numeric_limits<X>::digits <= std::numeric_limits<uint32_t>::digits >::type >
+  {
+    static uint32_t to_int (const decnumber& n, void* ctx, int32_t rounding_mode) noexcept
+	{
+	  return funcs::ToUInt32 (&n, ctx, rounding_mode);
+	}
+	
+	static void from_int (decnumber& n, X x) noexcept
+	{
+	  funcs::FromUInt32 (&n, static_cast<uint32_t> (x));
+	}
+  };
+
+
+  template <typename X>
+  struct int_conv<X, 
+    typename std::enable_if<std::is_same<X, int64_t>::value >::type >
+  {
+    static int64_t to_int (const decnumber& n, void* ctx, int32_t rounding_mode) noexcept
+	{
+	  char tmpstr[max_strlen + 8];
+	  funcs::ToString (&n, tmpstr);
+	  return std::strtoll (tmpstr, nullptr, 10);
+	}
+	
+	static void from_int (decnumber& n, X x) noexcept
+	{
+	  context ctx;
+	  char tmpstr[std::numeric_limits<X>::digits10 + 8];
+	  snprintf (tmpstr, std::extent<decltype (tmpstr)>::value, "%lld", x);
+	  funcs::FromString (&n, tmpstr, &ctx);
+	}
+  };
+
+  template <typename X>
+  struct int_conv<X, 
+    typename std::enable_if<std::is_same<X, uint64_t>::value >::type >
+  {
+    static uint64_t to_int (const decnumber& n, void* ctx, int32_t rounding_mode) noexcept
+	{
+	  char tmpstr[max_strlen + 8];
+	  funcs::ToString (&n, tmpstr);
+	  return std::strtoull (tmpstr, nullptr, 10);
+	}
+	
+	static void from_int (decnumber& n, X x) noexcept
+	{
+	  context ctx;
+	  char tmpstr[std::numeric_limits<X>::digits10 + 8];
+	  snprintf (tmpstr, std::extent<decltype (tmpstr)>::value, "%llu", x);
+	  funcs::FromString (&n, tmpstr, &ctx);
+	}
+  };
+
+
+  template <typename X, typename Enable = void> struct check_converted_int;
+  
+  template <typename X>
+  struct check_converted_int<X,
+    typename std::enable_if<std::is_signed<X>::value
+							&& std::numeric_limits<X>::digits < std::numeric_limits<int32_t>::digits >::type >
+  {
+    static X check (int32_t x, context& ctx) noexcept
+	{
+      if (x > std::numeric_limits<X>::max ()
+		  || x < std::numeric_limits<X>::min ())
+	  {
+	    // set exception flags etc
+	  }
+	  return static_cast<X> (x);
+	}
+  };
+
+  template <typename X>
+  struct check_converted_int<X,
+    typename std::enable_if< std::is_unsigned<X>::value
+							 && std::numeric_limits<X>::digits < std::numeric_limits<uint32_t>::digits >::type >
+  {
+    static X check (uint32_t x, context& ctx) noexcept
+	{
+      if (x > std::numeric_limits<X>::max ())
+	  {
+	    // set exception flags etc
+	  }
+	  return static_cast<X> (x);
+	}
+  };
+  
+  template <typename X>
+  struct check_converted_int<X,
+    typename std::enable_if< std::is_same<X, int32_t>::value
+							 || std::is_same<X, uint32_t>::value
+							 || std::is_same<X, int64_t>::value
+							 || std::is_same<X, uint64_t>::value >::type >
+  {
+    static X check (X x, context& ctx) noexcept { return x; }
+  };
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // tagged special ctors
+  enum ctor_negate_tag			{ ctor_negate };
+  enum ctor_abs_tag				{ ctor_abs };
+  enum ctor_from_string_tag		{ ctor_from_string };
+  enum ctor_min_tag				{ ctor_min };
+  enum ctor_lowest_tag			{ ctor_lowest };
+  enum ctor_max_tag				{ ctor_max };
+  enum ctor_epsilon_tag			{ ctor_epsilon };
+  enum ctor_round_error_tag		{ ctor_round_error };
+  enum ctor_infinity_tag		{ ctor_infinity };
+  enum ctor_quiet_nan_tag		{ ctor_quiet_nan };
+  enum ctor_signaling_nan_tag	{ ctor_signaling_nan };
+  enum ctor_denorm_min_tag		{ ctor_denorm_min };
+  
+/*
+  decnumber (const decnumber& rhs, ctor_negate_tag) noexcept
+  {
+  #warning uhm .. not sure whether to use CopyNegate or Minus func here
+    funcs::CopyNegate (this, &rhs);
+  }
+*/
+  decnumber (const decnumber& rhs, ctor_negate_tag) noexcept
+    : decnumber (rhs)
+  {
+    word (0) ^= sign_mask;
+  }
+
+  decnumber (const decnumber& rhs, ctor_abs_tag) noexcept
+    : decnumber (rhs)
+  {
+	word (0) &= ~sign_mask;
+  }
+
+  decnumber (const char* str, ctor_from_string_tag) noexcept
+  {
+	context ctx;
+    funcs::FromString (this, str, &ctx);
+  }
+  
+  decnumber (ctor_min_tag) noexcept
+  {
+    context ctx;
+	funcs::Power (this, &__const_ten, &__const_emin, &ctx);
+  }
+  
+  decnumber (ctor_lowest_tag) noexcept
+  {
+    decnumber i = - decnumber (ctor_infinity);
+	context ctx;
+	funcs::NextPlus (this, &i, &ctx);
+  }
+  
+  decnumber (ctor_max_tag) noexcept
+  {
+	context ctx;
+
+    decnumber m = 9;
+	decnumber res = m;
+
+	for (int a = 1; a < pmax; ++a)
+	{
+	  funcs::Shift (&res, &m, &__const_one, &ctx);
+	  res += 9;
+	  m = res;
+	}
+	
+	decnumber p;
+	decnumber ee = emax - pmax + 1;
+
+	funcs::Power (&p, &__const_ten, &ee, &ctx);
+	funcs::Multiply (this, &res, &p, &ctx);
+  }
+  
+  decnumber (ctor_epsilon_tag) noexcept
+  {
+	context ctx;
+	decnumber one_plus_epsilon;
+	funcs::NextPlus (&one_plus_epsilon, &__const_one, &ctx);
+	funcs::Subtract (this, &one_plus_epsilon, &__const_one, &ctx);
+  }
+  
+  decnumber (ctor_round_error_tag) noexcept
+   : decnumber (__const_one)
+  {
+  }
+  
+  decnumber (ctor_infinity_tag) noexcept
+  {
+    context ctx;
+	funcs::NextPlus (this, &__const_max (), &ctx);
+  }
+  
+  decnumber (ctor_quiet_nan_tag) noexcept
+	: decnumber (__const_zero)
+  {
+    word (0) = qnan_mask;
+  }
+  
+  decnumber (ctor_signaling_nan_tag) noexcept
+  {
+    word (0) = snan_mask;
+  }
+  
+  decnumber (ctor_denorm_min_tag) noexcept
+  {
+    context ctx;
+	funcs::NextPlus (this, &__const_zero, &ctx);
+  }
+
+
+public:
+  
+  decnumber (void) = default;
+  decnumber (const decnumber& rhs) = default;  // apple clang 3.0 bug? explicitely defaulted copy ctor produces garbage
+  												// yep, that seems to have been a clang bug.  it's OK with apple clang 3.1
+
+
+  // implicit construction from integral values (other than bool)
+  template <typename X>
+  decnumber (X rhs,
+  			 typename std::enable_if<std::is_integral<X>::value>::type* = nullptr) noexcept
+  {
+    int_conv<X>::from_int (*this, rhs);
+  }
+  
+  
+  // implicit widening ctor
+  //   decimal32 -> decimal64
+  //   decimal32 -> decimal128
+  //   decimal64 -> decimal128
+  template <int X>
+  decnumber (const decnumber<X>& rhs,
+  			 typename std::enable_if<(bits > decnumber<X>::bits) >::type* = nullptr) noexcept
+  {
+    context ctx;
+    decnumber_promote_demote<X, T>::convert (this, &rhs, &ctx);
+  }
+
+  // explicit narrowing ctor
+  //  decimal128 -> decimal32
+  //  decimal128 -> decimal64
+  //  decimal64 -> decimal32
+  template <int X>
+  explicit decnumber (const decnumber<X>& rhs,
+  			 typename std::enable_if<(bits < decnumber<X>::bits) >::type* = nullptr) noexcept
+  {
+    context ctx;
+    decnumber_promote_demote<X, T>::convert (this, &rhs, &ctx);
+  }
+
+  // other ctors are explicit
+  template <typename X>
+  explicit decnumber (const X& x,
+  		typename std::enable_if<!std::is_integral<X>::value>::type* = nullptr) noexcept
+  {
+    convert_from<X>::convert (x, this);
+  }
+
+
+  // conversion to integral types is implicit, except for bool
+  template <typename X, 
+			typename E = typename std::enable_if< std::is_integral<X>::value
+												  && ! std::is_same<X, bool>::value >::type >
+  operator X (void) const noexcept
+  {
+    context ctx;
+    auto r = int_conv<X>::to_int (*this, &ctx, FE_DEC_TOWARD_ZERO);
+	return check_converted_int<X>::check (r, ctx);
+  }
+
+  // other conversions to something else are explicit
+  template <typename X, typename EE = void,
+			typename E = typename std::enable_if< ! std::is_integral<X>::value >::type >
+  explicit operator X (void) const noexcept
+  {
+    return convert_to<X>::convert (this);
+  }
+  
+  template <typename X, typename EE = void, typename EEE = void,
+			typename E = typename std::enable_if< std::is_same<X, bool>::value >::type >
+  explicit operator X (void) const noexcept
+  {
+    return ! funcs::IsZero (this);
+  }
+  
+  
+  // equality comparison with integral types with 0 are a special case
+  // other comparisons with integral types must be done separately, since
+  // decnumbers are implicitely convertible to/from integral types
+  template <typename X>
+  typename std::enable_if< std::is_integral<X>::value, bool>::type
+  operator == (X rhs) const noexcept
+  {
+    if (rhs == 0)
+	  return funcs::IsZero (this);
+	else
+	  return *this == decnumber (rhs);
+  }
+
+  bool operator == (const decnumber& rhs) const noexcept
+  {
+    decnumber res;
+	context ctx;
+	funcs::Compare (&res, this, &rhs, &ctx);
+	return funcs::IsZero (&res);
+  }
+
+  template <typename X>
+  friend bool operator == (const X& lhs, const decnumber& rhs) noexcept
+  {
+    return rhs == lhs;
+  }
+  
+  template <typename X>
+  bool operator != (const X& x) const noexcept
+  {
+    return !(*this == x);
+  }
+  template <typename X>
+  friend bool operator != (const X& lhs, const decnumber& rhs) noexcept
+  {
+    return !(rhs == lhs);
+  }
+
+    
+  template <typename X>
+  typename std::enable_if< std::is_integral<X>::value, bool>::type
+  operator < (const X& rhs) const noexcept
+  {
+    return *this < decnumber (rhs);
+  }
+
+  template <typename X>
+  friend typename std::enable_if< std::is_integral<X>::value, bool>::type
+  operator < (const X& lhs, const decnumber& rhs) noexcept
+  {
+    return decnumber (lhs) < rhs;
+  }
+  
+  friend bool operator < (const decnumber& lhs, const decnumber& rhs) noexcept
+  {
+    decnumber res;
+	context ctx;
+	funcs::Compare (&res, &lhs, &rhs, &ctx);
+    return funcs::IsNegative (&res);
+  }
+
+  
+  template <typename X>
+  typename std::enable_if< std::is_integral<X>::value, bool>::type
+  operator <= (const X& rhs) const noexcept
+  {
+    return *this <= decnumber (rhs);
+  }
+
+  template <typename X>
+  friend typename std::enable_if< std::is_integral<X>::value, bool>::type
+  operator <= (const X& lhs, const decnumber& rhs) noexcept
+  {
+    return decnumber (lhs) < rhs;
+  }
+
+  friend bool operator <= (const decnumber& lhs, const decnumber& rhs) noexcept
+  {
+    decnumber res;
+	context ctx;
+	funcs::Compare (&res, &lhs, &rhs, &ctx);
+	return funcs::IsNegative (&res) || funcs::IsZero (&res);
+  }
+
+
+  template <typename X>
+  typename std::enable_if< std::is_integral<X>::value, bool>::type
+  operator > (const X& rhs) const noexcept
+  {
+    return *this > decnumber (rhs);
+  }
+
+  template <typename X>
+  friend typename std::enable_if< std::is_integral<X>::value, bool>::type
+  operator > (const X& lhs, const decnumber& rhs) noexcept
+  {
+    return decnumber (lhs) > rhs;
+  }
+  
+  friend bool operator > (const decnumber& lhs, const decnumber& rhs) noexcept
+  {
+    decnumber res;
+	context ctx;
+	funcs::Compare (&res, &lhs, &rhs, &ctx);
+    return funcs::IsPositive (&res);
+  }
+
+
+  template <typename X>
+  typename std::enable_if< std::is_integral<X>::value, bool>::type
+  operator >= (const X& rhs) const noexcept
+  {
+    return *this >= decnumber (rhs);
+  }
+
+  template <typename X>
+  friend typename std::enable_if< std::is_integral<X>::value, bool>::type
+  operator >= (const X& lhs, const decnumber& rhs) noexcept
+  {
+    return decnumber (lhs) > rhs;
+  }
+  
+  friend bool operator >= (const decnumber& lhs, const decnumber& rhs) noexcept
+  {
+    decnumber res;
+	context ctx;
+	funcs::Compare (&res, &lhs, &rhs, &ctx);
+    return funcs::IsZero (&res) || funcs::IsPositive (&res);
+  }
+  
+  
+  // unary arithmetic
+  const decnumber operator + (void) const noexcept
+  {
+    return *this;
+  }
+  
+  const decnumber operator - (void) const noexcept
+  {
+    return decnumber (*this, ctor_negate);
+  }
+
+  decnumber& operator -- (void) noexcept
+  {
+    // prefix decrement
+	*this -= __const_one;
+	return *this;
+  }
+  
+  const decnumber operator -- (int) noexcept
+  {
+    // suffix decrement
+	decnumber prev = *this;
+	*this -= __const_one;
+	return prev;
+  }
+  
+  decnumber& operator ++ (void) noexcept
+  {
+    // prefix increment
+	*this += __const_one;
+	return *this;
+  }
+  
+  const decnumber operator ++ (int) noexcept
+  {
+    // suffix increment
+	decnumber prev = *this;
+	*this += __const_one;
+	return prev;
+  }
+  
+  
+  // binary arithmetic
+  // if both operands are of type decnumber, the operation is promoted to the wider
+  // type of the two and the result is the wider type.
+  #define expand_op(__op__, __cop__, __func__) \
+  const decnumber operator __op__ (const decnumber& rhs) const noexcept \
+  { \
+    decnumber res;	context ctx; funcs::__func__ (&res, this, &rhs, &ctx); return res; \
+  } \
+\
+/* lhs width < rhs width. rhs is widened by implicit widening ctor */ \
+  template <int X> \
+  const typename std::enable_if< (decnumber<X>::bits > bits), decnumber<X> >::type \
+  operator __op__ (const decnumber<X>& rhs) const noexcept \
+  { \
+    return rhs __op__ *this; \
+  } \
+\
+/* rhs is implicitely converted integer  */ \
+  template <typename X> \
+  const typename std::enable_if< std::is_integral<X>::value, decnumber >::type \
+  operator __op__ (X rhs) const noexcept \
+  { \
+    return *this __op__ decnumber (rhs); \
+  } \
+\
+/* lhs is implicitely converted integer  */ \
+  template <typename X> \
+  friend const typename std::enable_if< std::is_integral<X>::value, decnumber>::type\
+  operator __op__ (X lhs, const decnumber& rhs) noexcept \
+  { \
+    return decnumber (lhs) __op__ rhs; \
+  } \
+\
+  decnumber& operator __cop__ (const decnumber& rhs) noexcept \
+  { \
+    *this = *this __op__ rhs; \
+	return *this; \
+  }
+
+  expand_op ( + , += , Add);
+  expand_op ( - , -= , Subtract);
+  expand_op ( * , *= , Multiply);
+  expand_op ( / , /= , Divide);
+  
+  #undef expand_op
+
+  
+};
+
+
+using decimal32 = decnumber<32>;
+using decimal64 = decnumber<64>;
+using decimal128 = decnumber<128>;
+
+// 3.6.3 evaluation formats
+typedef decimal32 decimal32_t;
+typedef decimal64 decimal64_t;
+typedef decimal128 decimal128_t;
+
+#ifndef __decnumber__impl__
+
+
+#define expand_make_decimal(__width__) \
+static inline decimal ## __width__ make_decimal ## __width__ (long long coef, int exp) noexcept\
+{\
+  decimal##__width__ r;\
+  decnumber_funcs<__width__>::FromExpSignedCoef (&r, coef, exp);\
+  return r;\
+}\
+static inline decimal ## __width__ make_decimal ## __width__ (unsigned long long coef, int exp) noexcept\
+{\
+  decimal##__width__ r;\
+  decnumber_funcs<__width__>::FromExpUnsignedCoef (&r, coef, exp);\
+  return r;\
+}\
+static inline decimal ## __width__ make_decimal ## __width__ (int coef, int exp) \
+{ \
+  return make_decimal ## __width__ ((long long)coef, exp); \
+}\
+
+expand_make_decimal (32)
+expand_make_decimal (64)
+expand_make_decimal (128)
+
+
+#undef expand_make_decimal
+
+#endif // __decnumber__impl__
+
+
+// -----------------------------------------------------------------------------
+// locale facets
+// 3.10.2 extended_num_get facet
+template <class charT, 
+		  class InputIterator = std::istreambuf_iterator<charT, std::char_traits<charT>>>
+class extended_num_get : public std::locale::facet
+{
+public:
+  typedef charT char_type;
+  typedef InputIterator iter_type;
+  
+  explicit extended_num_get (size_t refs = 0);
+  extended_num_get (const std::locale& b, size_t refs = 0);
+  
+  iter_type get (iter_type in, iter_type end, std::ios_base& str, std::ios_base::iostate& err, decimal32& val) const
+  {
+    return do_get (in, end, str, err, val);
+  }
+  iter_type get (iter_type in, iter_type end, std::ios_base& str, std::ios_base::iostate& err, decimal64& val) const
+  {
+    return do_get (in, end, str, err, val);
+  }
+  iter_type get (iter_type in, iter_type end, std::ios_base& str, std::ios_base::iostate& err, decimal128& val) const
+  {
+    return do_get (in, end, str, err, val);
+  }
+
+  iter_type get (iter_type in, iter_type end, std::ios_base& str, std::ios_base::iostate& err, bool& val) const
+  {
+//    return std::use_facet<std::num_get<charT, InputIterator>>(baseloc).get (in, end, str, err, val);
+  }
+  iter_type get (iter_type in, iter_type end, std::ios_base& str, std::ios_base::iostate& err, long& val) const
+  {
+//    return std::use_facet<std::num_get<charT, InputIterator>>(baseloc).get (in, end, str, err, val);
+  }
+  iter_type get (iter_type in, iter_type end, std::ios_base& str, std::ios_base::iostate& err, unsigned short& val) const
+  {
+//    return std::use_facet<std::num_get<charT, InputIterator>>(baseloc).get (in, end, str, err, val);
+  }
+  iter_type get (iter_type in, iter_type end, std::ios_base& str, std::ios_base::iostate& err, unsigned int& val) const
+  {
+//    return std::use_facet<std::num_get<charT, InputIterator>>(baseloc).get (in, end, str, err, val);
+  }
+  iter_type get (iter_type in, iter_type end, std::ios_base& str, std::ios_base::iostate& err, unsigned long& val) const
+  {
+//    return std::use_facet<std::num_get<charT, InputIterator>>(baseloc).get (in, end, str, err, val);
+  }
+  iter_type get (iter_type in, iter_type end, std::ios_base& str, std::ios_base::iostate& err, float& val) const
+  {
+//    return std::use_facet<std::num_get<charT, InputIterator>>(baseloc).get (in, end, str, err, val);
+  }
+  iter_type get (iter_type in, iter_type end, std::ios_base& str, std::ios_base::iostate& err, double& val) const
+  {
+//    return std::use_facet<std::num_get<charT, InputIterator>>(baseloc).get (in, end, str, err, val);
+  }
+  iter_type get (iter_type in, iter_type end, std::ios_base& str, std::ios_base::iostate& err, long double& val) const
+  {
+//    return std::use_facet<std::num_get<charT, InputIterator>>(baseloc).get (in, end, str, err, val);
+  }
+  iter_type get (iter_type in, iter_type end, std::ios_base& str, std::ios_base::iostate& err, void*& val) const
+  {
+//    return std::use_facet<std::num_get<charT, InputIterator>>(baseloc).get (in, end, str, err, val);
+  }
+
+  static std::locale::id id;
+  
+protected:
+  virtual ~extended_num_get (void);
+  
+  virtual iter_type do_get (iter_type in, iter_type end, std::ios_base& str, std::ios_base::iostate& err, decimal32& val) const;
+  virtual iter_type do_get (iter_type in, iter_type end, std::ios_base& str, std::ios_base::iostate& err, decimal64& val) const;
+  virtual iter_type do_get (iter_type in, iter_type end, std::ios_base& str, std::ios_base::iostate& err, decimal128& val) const;
+
+  // std::locale baseloc;	// exposition only
+};
+
+
+// 3.10.3 extended_num_put facet
+template <class charT,
+		  class OutputIterator = std::ostreambuf_iterator<charT, std::char_traits<charT>>>
+class extended_num_put : public std::locale::facet
+{
+public:
+  typedef charT char_type;
+  typedef OutputIterator iter_type;
+  
+  explicit extended_num_put (size_t refs = 0);
+  extended_num_put (const std::locale& b, size_t refs = 0);
+  
+  iter_type put (iter_type s, ios_base& f, char_type fill, const decimal32& val) const;
+  iter_type put (iter_type s, ios_base& f, char_type fill, const decimal64& val) const;
+  iter_type put (iter_type s, ios_base& f, char_type fill, const decimal128& val) const;
+
+  iter_type put (iter_type s, ios_base& f, char_type fill, bool val) const;
+  iter_type put (iter_type s, ios_base& f, char_type fill, long val) const;
+  iter_type put (iter_type s, ios_base& f, char_type fill, unsigned long val) const;
+  iter_type put (iter_type s, ios_base& f, char_type fill, double val) const;
+  iter_type put (iter_type s, ios_base& f, char_type fill, long double val) const;
+  iter_type put (iter_type s, ios_base& f, char_type fill, const void* val) const;
+
+  static std::locale::id id;
+  
+protected:
+  virtual ~extended_num_put (void);
+  
+  virtual iter_type do_put (iter_type s, ios_base& f, char_type fill, const decimal32& val) const;
+  virtual iter_type do_put (iter_type s, ios_base& f, char_type fill, const decimal64& val) const;
+  virtual iter_type do_put (iter_type s, ios_base& f, char_type fill, const decimal128& val) const;
+
+  // std::locale baseloc;	// exposition only
+};
+
+
+
+// 3.2.10 Formatted input
+template <class charT, class traits, int T>
+std::basic_istream<charT, traits> & 
+operator >> (std::basic_istream<charT, traits>& is, decnumber<T>& d)
+{
+/*  std::basic_istream<charT, traits>::sentry s (is);
+  if (s)
+  {
+	typedef extended_num_get<charT,std::istreambuf_iterator<charT, traits>> extnumget;
+	std::ios_base::iostate err = 0;
+	std::use_facet<extnumget> (is.getloc()).get (*this, 0, *this, err, d);
+	is.setstate(err);
+  }*/
+  return is;
+}
+
+// 3.2.11 Formatted output
+template <class charT, class traits, int T>
+std::basic_ostream<charT, traits> &
+operator << (std::basic_ostream<charT, traits> & os, const decnumber<T>& d)
+{
+  char tmpstr[decnumber_traits<T>::max_strlen + 8];
+  decnumber_funcs<T>::ToString (&d, tmpstr);
+  os << tmpstr;
+  return os;
+}
+
+} // namespace decimal
+
+
+#ifndef __decnumber__impl__
+
+// -----------------------------------------------------------------------------
+// 3.11 traits
+
+template <int X>
+struct is_scalar<decimal::decnumber<X>> : public true_type { };
+
+template <int X>
+struct is_compound<decimal::decnumber<X>> : public true_type { };
+
+template <int X>
+struct is_integral<decimal::decnumber<X>> : public false_type { };
+
+template <int X>
+struct is_floating_point<decimal::decnumber<X>> : public true_type { };
+
+//template <int X>
+//struct is_decimal_floating_point<decimal::decnumber<X>> : public true_type { };
+
+template <int X>
+struct is_fundamental<decimal::decnumber<X>> : public false_type { };
+
+template <int X>
+struct is_arithmetic<decimal::decnumber<X>> : public true_type { };
+
+template <int X>
+struct is_pod<decimal::decnumber<X>> : public true_type { };
+
+template <int X>
+struct is_trivial<decimal::decnumber<X>> : public true_type { };
+
+template <int X>
+struct is_trivially_copyable<decimal::decnumber<X>> : public true_type { };
+
+template <int X>
+struct is_class<decimal::decnumber<X>> : public true_type { };
+
+template <int X>
+struct is_signed<decimal::decnumber<X>> : public true_type { };
+
+template <int X>
+struct is_unsigned<decimal::decnumber<X>> : public false_type { };
+
+// -----------------------------------------------------------------------------
+// <cmath> overloads
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// basic operations
+
+template <int T> static inline 
+const decimal::decnumber<T> abs (const decimal::decnumber<T>& arg) noexcept
+{
+  decimal::decnumber_context<T> ctx;
+  decimal::decnumber<T> res;
+  decimal::decnumber_funcs<T>::Abs (&res, &arg, &ctx);
+// hmm not sure which ...
+//  decimal::decnumber_funcs<T>::CopyAbs (&res, &arg);
+  return res;
+}
+
+template <int T> static inline
+const decimal::decnumber<T> fabs (const decimal::decnumber<T>& arg) noexcept
+{
+  decimal::decnumber_context<T> ctx;
+  decimal::decnumber<T> res;
+  decimal::decnumber_funcs<T>::Abs (&res, &arg, &ctx);
+// hmm not sure which ...
+//  decimal::decnumber_funcs<T>::CopyAbs (&res, &arg);
+  return res;
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+min (const decimal::decnumber<T>& a, const decimal::decnumber<T>& b) noexcept
+{
+  decimal::decnumber_context<T> ctx;
+  decimal::decnumber<T> res;
+  decimal::decnumber_funcs<T>::Min (&res, &a, &b, &ctx);
+  return res;
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+fmin (const decimal::decnumber<T>& a, const decimal::decnumber<T>& b) noexcept
+{
+  decimal::decnumber_context<T> ctx;
+  decimal::decnumber<T> res;
+  decimal::decnumber_funcs<T>::Min (&res, &a, &b, &ctx);
+  return res;
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+max (const decimal::decnumber<T>& a, const decimal::decnumber<T>& b) noexcept
+{
+  decimal::decnumber_context<T> ctx;
+  decimal::decnumber<T> res;
+  decimal::decnumber_funcs<T>::Max (&res, &a, &b, &ctx);
+  return res;
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+fmax (const decimal::decnumber<T>& a, const decimal::decnumber<T>& b) noexcept
+{
+  decimal::decnumber_context<T> ctx;
+  decimal::decnumber<T> res;
+  decimal::decnumber_funcs<T>::Max (&res, &a, &b, &ctx);
+  return res;
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+fmod (const decimal::decnumber<T>& a, const decimal::decnumber<T>& b) noexcept
+{
+  decimal::decnumber_context<T> ctx;
+  decimal::decnumber<T> res;
+  decimal::decnumber_funcs<T>::Remainder (&res, &a, &b, &ctx);
+  return res;
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+remainder (const decimal::decnumber<T>& a, const decimal::decnumber<T>& b) noexcept
+{
+  decimal::decnumber<T> quotient = a / b;
+  return quotient - trunc (quotient);
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+remquo (const decimal::decnumber<T>& a, const decimal::decnumber<T>& b, int* quo) noexcept
+{
+  // not implemented
+  assert (false);  
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+fma (const decimal::decnumber<T>& a, const decimal::decnumber<T>& b, const decimal::decnumber<T>& c) noexcept
+{
+  decimal::decnumber_context<T> ctx;
+  decimal::decnumber<T> res;
+  decimal::decnumber_funcs<T>::FMA (&res, &a, &b, &c, &ctx);
+  return res;
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+fdim (const decimal::decnumber<T>& a, const decimal::decnumber<T>& b) noexcept
+{
+  // improve this
+  return fmax (a - b, 0);
+}
+
+
+template <int T> static inline
+const decimal::decnumber<T>
+nan (const char* arg) noexcept
+{
+  // not implemented
+  assert (false);
+}
+
+
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// exponential functions
+
+template <int T> static inline
+const decimal::decnumber<T>
+exp (const decimal::decnumber<T>& a) noexcept
+{
+//  return pow (decimal::decnumber<T>::__const_e, a);
+  decimal::decnumber_context<T> ctx;
+  decimal::decnumber<T> res;
+  decimal::decnumber_funcs<T>::Exp (&res, &a, &ctx);
+  return res;
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+exp2 (const decimal::decnumber<T>& a) noexcept
+{
+  return pow (decimal::decnumber<T>::__const_two, a);
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+expm1 (const decimal::decnumber<T>& a) noexcept
+{
+  // this is not accurate!
+  return exp (a) - decimal::decnumber<T>::__const_one;
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+log (const decimal::decnumber<T>& a) noexcept
+{
+  decimal::decnumber_context<T> ctx;
+  decimal::decnumber<T> res;
+  decimal::decnumber_funcs<T>::Ln (&res, &a, &ctx);
+  return res;
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+log10 (const decimal::decnumber<T>& a) noexcept
+{
+  decimal::decnumber_context<T> ctx;
+  decimal::decnumber<T> res;
+  decimal::decnumber_funcs<T>::Log10 (&res, &a, &ctx);
+  return res;
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+log1p (const decimal::decnumber<T>& a) noexcept
+{
+  // this is not accurate!
+  return log (a) + decimal::decnumber<T>::__const_one;
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+log2 (const decimal::decnumber<T>& a) noexcept
+{
+  // not implemented
+  assert (false);
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// power functions
+
+template <int T> static inline
+const decimal::decnumber<T>
+sqrt (const decimal::decnumber<T>& a) noexcept
+{
+  decimal::decnumber_context<T> ctx;
+  decimal::decnumber<T> res;
+  decimal::decnumber_funcs<T>::SquareRoot (&res, &a, &ctx);
+  return res;
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+cbrt (const decimal::decnumber<T>& a) noexcept
+{
+  // not implemented
+  assert (false);
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+hypot (const decimal::decnumber<T>& x, const decimal::decnumber<T>& y) noexcept
+{
+  auto u = std::max (x, y);
+  auto v = std::min (x, y);
+  
+  auto u_over_v = u / v;
+  return u * std::sqrt (1 + u_over_v * u_over_v);
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+pow (const decimal::decnumber<T>& base, const decimal::decnumber<T>& exp) noexcept
+{
+  decimal::decnumber_context<T> ctx;
+  decimal::decnumber<T> res;
+  decimal::decnumber_funcs<T>::Power (&res, &base, &exp, &ctx);
+  return res;
+}
+
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// trigonometric and hyperbolic functions
+
+template <int T> static inline
+const decimal::decnumber<T>
+sin (const decimal::decnumber<T>& a) noexcept
+{
+  // not implemented
+  assert (false);
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+cos (const decimal::decnumber<T>& a) noexcept
+{
+  // not implemented
+  assert (false);
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+tan (const decimal::decnumber<T>& a) noexcept
+{
+  // not implemented
+  assert (false);
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+asin (const decimal::decnumber<T>& a) noexcept
+{
+  // not implemented
+  assert (false);
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+acos (const decimal::decnumber<T>& a) noexcept
+{
+  // not implemented
+  assert (false);
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+atan (const decimal::decnumber<T>& a) noexcept
+{
+  // not implemented
+  assert (false);
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+atan2 (const decimal::decnumber<T>& y, const decimal::decnumber<T>& x) noexcept
+{
+  // not implemented
+  assert (false);
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+sinh (const decimal::decnumber<T>& a) noexcept
+{
+  // not implemented
+  assert (false);
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+cosh (const decimal::decnumber<T>& a) noexcept
+{
+  // not implemented
+  assert (false);
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+tanh (const decimal::decnumber<T>& a) noexcept
+{
+  // not implemented
+  assert (false);
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+asinh (const decimal::decnumber<T>& a) noexcept
+{
+  // not implemented
+  assert (false);
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+acosh (const decimal::decnumber<T>& a) noexcept
+{
+  // not implemented
+  assert (false);
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+atanh (const decimal::decnumber<T>& a) noexcept
+{
+  // not implemented
+  assert (false);
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// error and gamma functions
+
+template <int T> static inline
+const decimal::decnumber<T>
+erf (const decimal::decnumber<T>& a) noexcept
+{
+  // not implemented
+  assert (false);
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+erfc (const decimal::decnumber<T>& a) noexcept
+{
+  // not implemented
+  assert (false);
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+lgamma (const decimal::decnumber<T>& a) noexcept
+{
+  // not implemented
+  assert (false);
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+tgamma (const decimal::decnumber<T>& a) noexcept
+{
+  // not implemented
+  assert (false);
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// nearest integer floating point operations
+
+template <int T> static inline
+const decimal::decnumber<T>
+ceil (const decimal::decnumber<T>& a) noexcept
+{
+  decimal::decnumber_context<T> ctx;
+  decimal::decnumber<T> res;
+  decimal::decnumber_funcs<T>::ToIntegralValue (&res, &a, &ctx, FE_DEC_UPWARD);
+  return res;
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+floor (const decimal::decnumber<T>& a) noexcept
+{
+  decimal::decnumber_context<T> ctx;
+  decimal::decnumber<T> res;
+  decimal::decnumber_funcs<T>::ToIntegralValue (&res, &a, &ctx, FE_DEC_DOWNWARD);
+  return res;
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+round (const decimal::decnumber<T>& a) noexcept
+{
+  decimal::decnumber_context<T> ctx;
+  decimal::decnumber<T> res;
+  decimal::decnumber_funcs<T>::ToIntegralValue (&res, &a, &ctx, FE_DEC_TONEAREST);
+  return res;
+}
+
+template <int T> static inline
+long lround (const decimal::decnumber<T>& a) noexcept
+{
+  return static_cast<long> (round (a));
+}
+
+template <int T> static inline
+long long llround (const decimal::decnumber<T>& a) noexcept
+{
+  return static_cast<long long> (round (a));
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+trunc (const decimal::decnumber<T>& a) noexcept
+{
+  decimal::decnumber_context<T> ctx;
+  decimal::decnumber<T> res;
+  decimal::decnumber_funcs<T>::ToIntegralValue (&res, &a, &ctx, FE_DEC_TOWARD_ZERO);
+  return res;
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+nearbyint (const decimal::decnumber<T>& a) noexcept
+{
+  // round to an integer in floating-point format, using the current rounding
+  // mode.
+  // currently we cannot change the rounding mode..
+  decimal::decnumber_context<T> ctx;
+  decimal::decnumber<T> res;
+  decimal::decnumber_funcs<T>::ToIntegralValueExact (&res, &a, &ctx);
+  return res;
+}
+
+template <int T> static inline 
+int
+rint (const decimal::decnumber<T>& a) noexcept
+{
+  return static_cast<int> (nearbyint (a));
+}
+
+template <int T> static inline
+long
+lrint (const decimal::decnumber<T>& a) noexcept
+{
+  return static_cast<long> (nearbyint (a));
+}
+
+template <int T> static inline
+long long 
+llrint (const decimal::decnumber<T>& a) noexcept
+{
+  return static_cast<long long> (nearbyint (a));
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// floating point manipulation functions
+template <int T> static inline
+const decimal::decnumber<T>
+ldexp (const decimal::decnumber<T>& arg, int exp) noexcept
+{
+  return arg * pow (decimal::decnumber<T>::__const_two, exp);
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+scalbn (const decimal::decnumber<T>& arg, int exp) noexcept
+{
+  decimal::decnumber_context<T> ctx;
+  decimal::decnumber<T> res;
+  decimal::decnumber<T> exp_dec = exp;
+  decimal::decnumber_funcs<T>::ScaleB (&res, &arg, &exp_dec, &ctx);
+  return res;
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+scalbln (const decimal::decnumber<T>& arg, int exp) noexcept
+{
+  // not implemented
+  assert (false);
+}
+template <int T> static inline
+const decimal::decnumber<T>
+scalbln (const decimal::decnumber<T>& arg, long exp) noexcept
+{
+  // not implemented
+  assert (false);
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+logb (const decimal::decnumber<T>& arg) noexcept
+{
+  decimal::decnumber_context<T> ctx;
+  decimal::decnumber<T> res;
+  decimal::decnumber_funcs<T>::LogB (&res, &arg, &ctx);
+  return res;
+}
+
+template <int T> static inline
+int
+ilogb (const decimal::decnumber<T>& arg) noexcept
+{
+  return static_cast<int> (logb (arg));
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+frexp (const decimal::decnumber<T>& arg, int* exp) noexcept
+{
+  // not implemented
+  assert (false);
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+modf (const decimal::decnumber<T>& arg, decimal::decnumber<T>* ipr) noexcept
+{
+  // not implemented
+  assert (false);
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+nexttoward (const decimal::decnumber<T>& from, const decimal::decnumber<T>& to) noexcept
+{
+  decimal::decnumber_context<T> ctx;
+  decimal::decnumber<T> res;
+  decimal::decnumber_funcs<T>::NextToward (&res, &from, &to, &ctx);
+  return res;
+}
+
+template <int T> static inline
+const decimal::decnumber<T>
+nextafter (const decimal::decnumber<T>& from, const decimal::decnumber<T>& to) noexcept
+{
+  return nexttoward (from, to);
+}
+
+
+template <int T> static inline
+const decimal::decnumber<T>
+copysign (const decimal::decnumber<T>& x, const decimal::decnumber<T>& y) noexcept
+{
+  decimal::decnumber<T> res;
+  decimal::decnumber_funcs<T>::CopySign (&res, &x, &y);
+  return res;  
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// classification
+
+template <int T> static inline
+int
+fpclassify (const decimal::decnumber<T>& arg) noexcept
+{
+ // one of FP_INFINITE, FP_NAN, FP_NORMAL, FP_SUBNORMAL, FP_ZERO or 
+ // implementation-defined type, specifying the category of arg.
+ assert (false);
+}
+
+template <int T> static inline
+int
+isfinite (const decimal::decnumber<T>& arg) noexcept
+{
+  return decimal::decnumber_funcs<T>::IsFinite (&arg);
+}
+
+template <int T> static inline
+int
+isinf (const decimal::decnumber<T>& arg) noexcept
+{
+  return decimal::decnumber_funcs<T>::IsInfinite (&arg);
+}
+
+template <int T> static inline
+int
+isnan (const decimal::decnumber<T>& arg) noexcept
+{
+  return decimal::decnumber_funcs<T>::IsNaN (&arg);
+}
+
+template <int T> static inline
+int
+isnormal (const decimal::decnumber<T>& arg) noexcept
+{
+  return decimal::decnumber_funcs<T>::IsNormal (&arg);
+}
+
+template <int T> static inline
+int
+signbit (const decimal::decnumber<T>& arg) noexcept
+{
+  return decimal::decnumber_funcs<T>::IsNegative (&arg);
+}
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// numeric limits
+
+template <int T>
+class numeric_limits<decimal::decnumber<T>>
+{
+  public:
+    static constexpr bool	is_specialized = true;
+	static constexpr bool	is_signed = true;
+	static constexpr bool	is_integer = false;
+	static constexpr bool	is_exact = false;
+	static constexpr bool	has_infinity = true;
+	static constexpr bool	has_quiet_NaN = true;
+	static constexpr bool	has_signaling_NaN = true;
+	static constexpr float_denorm_style has_denorm = denorm_present;
+	static constexpr bool	has_denorm_loss = true;
+	static constexpr float_round_style round_style = round_indeterminate;
+	static constexpr bool	is_iec559 = false;
+	static constexpr bool	is_bounded = true;
+	static constexpr bool	is_modulo = false;
+	static constexpr int	digits = decimal::decnumber_traits<T>::pmax;
+	static constexpr int	digits10 = digits;
+	static constexpr int	max_digits10 = digits;
+	static constexpr int	radix = 10;
+	static constexpr int	min_exponent = decimal::decnumber_traits<T>::emin;
+	static constexpr int	min_exponent10 = min_exponent;
+	static constexpr int	max_exponent = decimal::decnumber_traits<T>::emax;
+	static constexpr int	max_exponent10 = max_exponent;
+	static constexpr bool	traps = true;
+	static constexpr bool	tinyness_before = true;
+
+	static const decimal::decnumber<T>& min (void) noexcept
+	{
+	  return decimal::decnumber<T>::__const_min ();
+	}
+	
+	static const decimal::decnumber<T>& lowest (void) noexcept
+	{
+	  return decimal::decnumber<T>::__const_lowest ();
+	}
+	
+	static const decimal::decnumber<T>& max (void) noexcept
+	{
+	  return decimal::decnumber<T>::__const_max ();
+	}
+	
+	static const decimal::decnumber<T>& epsilon (void) noexcept
+	{
+	  return decimal::decnumber<T>::__const_epsilon ();
+	}
+	
+	static const decimal::decnumber<T>& round_error (void) noexcept
+	{
+	  return decimal::decnumber<T>::__const_round_error ();
+	}
+	
+	static const decimal::decnumber<T>& infinity (void) noexcept
+	{
+	  return decimal::decnumber<T>::__const_infinity ();
+	}
+
+	static const decimal::decnumber<T>& quiet_NaN (void) noexcept
+	{
+	  return decimal::decnumber<T>::__const_quiet_NaN;
+	}
+
+	static const decimal::decnumber<T>& signaling_NaN (void) noexcept
+	{
+	  return decimal::decnumber<T>::__const_signaling_NaN;
+	}
+	
+	static const decimal::decnumber<T>& denorm_min (void) noexcept
+	{
+	  return decimal::decnumber<T>::__const_denorm_min ();
+	}
+};
+
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+#endif // __decnumber__impl__
+
+} // namespace std
+	
+	
+	
+#endif // __decnumberxx_decimal__

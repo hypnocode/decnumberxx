@@ -1,0 +1,499 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7C116B661529CDE5005B74F5 /* decnumber_test32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C116B651529CDE5005B74F5 /* decnumber_test32.cpp */; };
+		7C116B671529CDE5005B74F5 /* decnumber_test32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C116B651529CDE5005B74F5 /* decnumber_test32.cpp */; };
+		7C6CFA721525B27B001259BF /* decnumber_funcs64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C6CFA711525B27B001259BF /* decnumber_funcs64.cpp */; };
+		7C6CFA741525B499001259BF /* decnumber_funcs64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C6CFA711525B27B001259BF /* decnumber_funcs64.cpp */; };
+		7C6CFA891525D1C7001259BF /* decnumber_funcs32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C6CFA871525D1C7001259BF /* decnumber_funcs32.cpp */; };
+		7C6CFA8A1525D1C7001259BF /* decnumber_funcs128.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C6CFA881525D1C7001259BF /* decnumber_funcs128.cpp */; };
+		7C6CFA8C1525D1CE001259BF /* decnumber_funcs32.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C6CFA871525D1C7001259BF /* decnumber_funcs32.cpp */; };
+		7C6CFA8D1525D1D2001259BF /* decnumber_funcs128.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C6CFA881525D1C7001259BF /* decnumber_funcs128.cpp */; };
+		7C6CFA8F1529A810001259BF /* decnumber_test64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C6CFA8E1529A810001259BF /* decnumber_test64.cpp */; };
+		7C6CFA901529A810001259BF /* decnumber_test64.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C6CFA8E1529A810001259BF /* decnumber_test64.cpp */; };
+		7C6CFA921529ADEF001259BF /* decnumber_test_gen.x.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 7C6CFA911529ADEF001259BF /* decnumber_test_gen.x.hpp */; };
+		7C6CFA931529ADEF001259BF /* decnumber_test_gen.x.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 7C6CFA911529ADEF001259BF /* decnumber_test_gen.x.hpp */; };
+		7C6CFA951529BB10001259BF /* decnumber_test128.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C6CFA941529BB10001259BF /* decnumber_test128.cpp */; };
+		7C6CFA961529BB10001259BF /* decnumber_test128.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C6CFA941529BB10001259BF /* decnumber_test128.cpp */; };
+		7C7679F41518CA1B00C004A8 /* decContext.c in Sources */ = {isa = PBXBuildFile; fileRef = 7C7679D11518CA1B00C004A8 /* decContext.c */; };
+		7C7679F51518CA1B00C004A8 /* decContext.c in Sources */ = {isa = PBXBuildFile; fileRef = 7C7679D11518CA1B00C004A8 /* decContext.c */; };
+		7C7679F61518CA1B00C004A8 /* decContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7679D21518CA1B00C004A8 /* decContext.h */; };
+		7C7679F71518CA1B00C004A8 /* decContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7679D21518CA1B00C004A8 /* decContext.h */; };
+		7C7679F81518CA1B00C004A8 /* decDouble.c in Sources */ = {isa = PBXBuildFile; fileRef = 7C7679D31518CA1B00C004A8 /* decDouble.c */; };
+		7C7679F91518CA1B00C004A8 /* decDouble.c in Sources */ = {isa = PBXBuildFile; fileRef = 7C7679D31518CA1B00C004A8 /* decDouble.c */; };
+		7C7679FA1518CA1B00C004A8 /* decDouble.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7679D41518CA1B00C004A8 /* decDouble.h */; };
+		7C7679FB1518CA1B00C004A8 /* decDouble.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7679D41518CA1B00C004A8 /* decDouble.h */; };
+		7C7679FC1518CA1B00C004A8 /* decDPD.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7679D51518CA1B00C004A8 /* decDPD.h */; };
+		7C7679FD1518CA1B00C004A8 /* decDPD.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7679D51518CA1B00C004A8 /* decDPD.h */; };
+		7C7679FE1518CA1B00C004A8 /* decimal32.c in Sources */ = {isa = PBXBuildFile; fileRef = 7C7679D61518CA1B00C004A8 /* decimal32.c */; };
+		7C7679FF1518CA1B00C004A8 /* decimal32.c in Sources */ = {isa = PBXBuildFile; fileRef = 7C7679D61518CA1B00C004A8 /* decimal32.c */; };
+		7C767A001518CA1B00C004A8 /* decimal32.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7679D71518CA1B00C004A8 /* decimal32.h */; };
+		7C767A011518CA1B00C004A8 /* decimal32.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7679D71518CA1B00C004A8 /* decimal32.h */; };
+		7C767A021518CA1B00C004A8 /* decimal64.c in Sources */ = {isa = PBXBuildFile; fileRef = 7C7679D81518CA1B00C004A8 /* decimal64.c */; };
+		7C767A031518CA1B00C004A8 /* decimal64.c in Sources */ = {isa = PBXBuildFile; fileRef = 7C7679D81518CA1B00C004A8 /* decimal64.c */; };
+		7C767A041518CA1B00C004A8 /* decimal64.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7679D91518CA1B00C004A8 /* decimal64.h */; };
+		7C767A051518CA1B00C004A8 /* decimal64.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7679D91518CA1B00C004A8 /* decimal64.h */; };
+		7C767A061518CA1B00C004A8 /* decimal128.c in Sources */ = {isa = PBXBuildFile; fileRef = 7C7679DA1518CA1B00C004A8 /* decimal128.c */; };
+		7C767A071518CA1B00C004A8 /* decimal128.c in Sources */ = {isa = PBXBuildFile; fileRef = 7C7679DA1518CA1B00C004A8 /* decimal128.c */; };
+		7C767A081518CA1B00C004A8 /* decimal128.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7679DB1518CA1B00C004A8 /* decimal128.h */; };
+		7C767A091518CA1B00C004A8 /* decimal128.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7679DB1518CA1B00C004A8 /* decimal128.h */; };
+		7C767A0A1518CA1B00C004A8 /* decNumber.c in Sources */ = {isa = PBXBuildFile; fileRef = 7C7679DC1518CA1B00C004A8 /* decNumber.c */; };
+		7C767A0B1518CA1B00C004A8 /* decNumber.c in Sources */ = {isa = PBXBuildFile; fileRef = 7C7679DC1518CA1B00C004A8 /* decNumber.c */; };
+		7C767A0C1518CA1B00C004A8 /* decNumber.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7679DD1518CA1B00C004A8 /* decNumber.h */; };
+		7C767A0D1518CA1B00C004A8 /* decNumber.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7679DD1518CA1B00C004A8 /* decNumber.h */; };
+		7C767A0E1518CA1B00C004A8 /* decNumberLocal.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7679DF1518CA1B00C004A8 /* decNumberLocal.h */; };
+		7C767A0F1518CA1B00C004A8 /* decNumberLocal.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7679DF1518CA1B00C004A8 /* decNumberLocal.h */; };
+		7C767A101518CA1B00C004A8 /* decPacked.c in Sources */ = {isa = PBXBuildFile; fileRef = 7C7679E01518CA1B00C004A8 /* decPacked.c */; };
+		7C767A111518CA1B00C004A8 /* decPacked.c in Sources */ = {isa = PBXBuildFile; fileRef = 7C7679E01518CA1B00C004A8 /* decPacked.c */; };
+		7C767A121518CA1B00C004A8 /* decPacked.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7679E11518CA1B00C004A8 /* decPacked.h */; };
+		7C767A131518CA1B00C004A8 /* decPacked.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7679E11518CA1B00C004A8 /* decPacked.h */; };
+		7C767A141518CA1B00C004A8 /* decQuad.c in Sources */ = {isa = PBXBuildFile; fileRef = 7C7679E21518CA1B00C004A8 /* decQuad.c */; };
+		7C767A151518CA1B00C004A8 /* decQuad.c in Sources */ = {isa = PBXBuildFile; fileRef = 7C7679E21518CA1B00C004A8 /* decQuad.c */; };
+		7C767A161518CA1B00C004A8 /* decQuad.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7679E31518CA1B00C004A8 /* decQuad.h */; };
+		7C767A171518CA1B00C004A8 /* decQuad.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7679E31518CA1B00C004A8 /* decQuad.h */; };
+		7C767A181518CA1B00C004A8 /* decSingle.c in Sources */ = {isa = PBXBuildFile; fileRef = 7C7679E41518CA1B00C004A8 /* decSingle.c */; };
+		7C767A191518CA1B00C004A8 /* decSingle.c in Sources */ = {isa = PBXBuildFile; fileRef = 7C7679E41518CA1B00C004A8 /* decSingle.c */; };
+		7C767A1A1518CA1B00C004A8 /* decSingle.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7679E51518CA1B00C004A8 /* decSingle.h */; };
+		7C767A1B1518CA1B00C004A8 /* decSingle.h in Headers */ = {isa = PBXBuildFile; fileRef = 7C7679E51518CA1B00C004A8 /* decSingle.h */; };
+		7C767A2D1518CA2800C004A8 /* decnumber.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 7C767A2C1518CA2800C004A8 /* decnumber.hpp */; };
+		7C767A2E1518CA2800C004A8 /* decnumber.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 7C767A2C1518CA2800C004A8 /* decnumber.hpp */; };
+		7C767A301518CA4300C004A8 /* decnumber_checks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C767A2F1518CA4300C004A8 /* decnumber_checks.cpp */; };
+		7C767A311518CA4300C004A8 /* decnumber_checks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C767A2F1518CA4300C004A8 /* decnumber_checks.cpp */; };
+		7C9587981518E11000A759A5 /* decimal in Headers */ = {isa = PBXBuildFile; fileRef = 7C9587971518E10F00A759A5 /* decimal */; };
+		7C9587991518E11000A759A5 /* decimal in Headers */ = {isa = PBXBuildFile; fileRef = 7C9587971518E10F00A759A5 /* decimal */; };
+		7C9587C11518FA7800A759A5 /* decnumberfunc.x.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 7C9587C01518FA7800A759A5 /* decnumberfunc.x.hpp */; };
+		7C9587C21518FA7800A759A5 /* decnumberfunc.x.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 7C9587C01518FA7800A759A5 /* decnumberfunc.x.hpp */; };
+		7C9587CD151A0DE900A759A5 /* decnumber_test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C9587CC151A0DE900A759A5 /* decnumber_test.cpp */; };
+		7C9587CE151A0DE900A759A5 /* decnumber_test.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7C9587CC151A0DE900A759A5 /* decnumber_test.cpp */; };
+		7CDCA240151C7B5100BA232B /* decnumber_funcs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CDCA23F151C7B5100BA232B /* decnumber_funcs.cpp */; };
+		7CDCA241151C7B5100BA232B /* decnumber_funcs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CDCA23F151C7B5100BA232B /* decnumber_funcs.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		7C116B651529CDE5005B74F5 /* decnumber_test32.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = decnumber_test32.cpp; sourceTree = "<group>"; };
+		7C116B69152AFE0C005B74F5 /* readme.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = readme.html; sourceTree = "<group>"; };
+		7C6CFA711525B27B001259BF /* decnumber_funcs64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = decnumber_funcs64.cpp; sourceTree = "<group>"; };
+		7C6CFA871525D1C7001259BF /* decnumber_funcs32.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = decnumber_funcs32.cpp; sourceTree = "<group>"; };
+		7C6CFA881525D1C7001259BF /* decnumber_funcs128.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = decnumber_funcs128.cpp; sourceTree = "<group>"; };
+		7C6CFA8E1529A810001259BF /* decnumber_test64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = decnumber_test64.cpp; sourceTree = "<group>"; };
+		7C6CFA911529ADEF001259BF /* decnumber_test_gen.x.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = decnumber_test_gen.x.hpp; sourceTree = "<group>"; };
+		7C6CFA941529BB10001259BF /* decnumber_test128.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = decnumber_test128.cpp; sourceTree = "<group>"; };
+		7C7679831518C33A00C004A8 /* libdecnumberxx_ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libdecnumberxx_ios.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C76799A1518C36800C004A8 /* libdecnumberxx_osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libdecnumberxx_osx.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C7679CF1518CA1B00C004A8 /* decBasic.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = decBasic.c; path = decNumber/decBasic.c; sourceTree = "<group>"; };
+		7C7679D01518CA1B00C004A8 /* decCommon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = decCommon.c; path = decNumber/decCommon.c; sourceTree = "<group>"; };
+		7C7679D11518CA1B00C004A8 /* decContext.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = decContext.c; path = decNumber/decContext.c; sourceTree = "<group>"; };
+		7C7679D21518CA1B00C004A8 /* decContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = decContext.h; path = decNumber/decContext.h; sourceTree = "<group>"; };
+		7C7679D31518CA1B00C004A8 /* decDouble.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = decDouble.c; path = decNumber/decDouble.c; sourceTree = "<group>"; };
+		7C7679D41518CA1B00C004A8 /* decDouble.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = decDouble.h; path = decNumber/decDouble.h; sourceTree = "<group>"; };
+		7C7679D51518CA1B00C004A8 /* decDPD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = decDPD.h; path = decNumber/decDPD.h; sourceTree = "<group>"; };
+		7C7679D61518CA1B00C004A8 /* decimal32.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = decimal32.c; path = decNumber/decimal32.c; sourceTree = "<group>"; };
+		7C7679D71518CA1B00C004A8 /* decimal32.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = decimal32.h; path = decNumber/decimal32.h; sourceTree = "<group>"; };
+		7C7679D81518CA1B00C004A8 /* decimal64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = decimal64.c; path = decNumber/decimal64.c; sourceTree = "<group>"; };
+		7C7679D91518CA1B00C004A8 /* decimal64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = decimal64.h; path = decNumber/decimal64.h; sourceTree = "<group>"; };
+		7C7679DA1518CA1B00C004A8 /* decimal128.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = decimal128.c; path = decNumber/decimal128.c; sourceTree = "<group>"; };
+		7C7679DB1518CA1B00C004A8 /* decimal128.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = decimal128.h; path = decNumber/decimal128.h; sourceTree = "<group>"; };
+		7C7679DC1518CA1B00C004A8 /* decNumber.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = decNumber.c; path = decNumber/decNumber.c; sourceTree = "<group>"; };
+		7C7679DD1518CA1B00C004A8 /* decNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = decNumber.h; path = decNumber/decNumber.h; sourceTree = "<group>"; };
+		7C7679DE1518CA1B00C004A8 /* decnumber.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = decnumber.pdf; path = decNumber/decnumber.pdf; sourceTree = "<group>"; };
+		7C7679DF1518CA1B00C004A8 /* decNumberLocal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = decNumberLocal.h; path = decNumber/decNumberLocal.h; sourceTree = "<group>"; };
+		7C7679E01518CA1B00C004A8 /* decPacked.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = decPacked.c; path = decNumber/decPacked.c; sourceTree = "<group>"; };
+		7C7679E11518CA1B00C004A8 /* decPacked.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = decPacked.h; path = decNumber/decPacked.h; sourceTree = "<group>"; };
+		7C7679E21518CA1B00C004A8 /* decQuad.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = decQuad.c; path = decNumber/decQuad.c; sourceTree = "<group>"; };
+		7C7679E31518CA1B00C004A8 /* decQuad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = decQuad.h; path = decNumber/decQuad.h; sourceTree = "<group>"; };
+		7C7679E41518CA1B00C004A8 /* decSingle.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = decSingle.c; path = decNumber/decSingle.c; sourceTree = "<group>"; };
+		7C7679E51518CA1B00C004A8 /* decSingle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = decSingle.h; path = decNumber/decSingle.h; sourceTree = "<group>"; };
+		7C7679EE1518CA1B00C004A8 /* ICU-license.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = "ICU-license.html"; path = "decNumber/ICU-license.html"; sourceTree = "<group>"; };
+		7C7679EF1518CA1B00C004A8 /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = readme.txt; path = decNumber/readme.txt; sourceTree = "<group>"; };
+		7C767A2C1518CA2800C004A8 /* decnumber.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = decnumber.hpp; sourceTree = "<group>"; };
+		7C767A2F1518CA4300C004A8 /* decnumber_checks.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = decnumber_checks.cpp; sourceTree = "<group>"; };
+		7C9587971518E10F00A759A5 /* decimal */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = decimal; sourceTree = "<group>"; };
+		7C9587C01518FA7800A759A5 /* decnumberfunc.x.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = decnumberfunc.x.hpp; sourceTree = "<group>"; };
+		7C9587CC151A0DE900A759A5 /* decnumber_test.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = decnumber_test.cpp; sourceTree = "<group>"; };
+		7CDCA23F151C7B5100BA232B /* decnumber_funcs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = decnumber_funcs.cpp; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7C7679801518C33A00C004A8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7C7679951518C36800C004A8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7C7679781518C33A00C004A8 = {
+			isa = PBXGroup;
+			children = (
+				7C116B69152AFE0C005B74F5 /* readme.html */,
+				7C9587971518E10F00A759A5 /* decimal */,
+				7C767A2C1518CA2800C004A8 /* decnumber.hpp */,
+				7C9587C01518FA7800A759A5 /* decnumberfunc.x.hpp */,
+				7C767A2F1518CA4300C004A8 /* decnumber_checks.cpp */,
+				7CDCA23F151C7B5100BA232B /* decnumber_funcs.cpp */,
+				7C6CFA871525D1C7001259BF /* decnumber_funcs32.cpp */,
+				7C6CFA711525B27B001259BF /* decnumber_funcs64.cpp */,
+				7C6CFA881525D1C7001259BF /* decnumber_funcs128.cpp */,
+				7C9587CC151A0DE900A759A5 /* decnumber_test.cpp */,
+				7C6CFA911529ADEF001259BF /* decnumber_test_gen.x.hpp */,
+				7C116B651529CDE5005B74F5 /* decnumber_test32.cpp */,
+				7C6CFA8E1529A810001259BF /* decnumber_test64.cpp */,
+				7C6CFA941529BB10001259BF /* decnumber_test128.cpp */,
+				7C7679CE1518CA0400C004A8 /* decNumber */,
+				7C7679841518C33A00C004A8 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7C7679841518C33A00C004A8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7C7679831518C33A00C004A8 /* libdecnumberxx_ios.a */,
+				7C76799A1518C36800C004A8 /* libdecnumberxx_osx.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7C7679CE1518CA0400C004A8 /* decNumber */ = {
+			isa = PBXGroup;
+			children = (
+				7C7679CF1518CA1B00C004A8 /* decBasic.c */,
+				7C7679D01518CA1B00C004A8 /* decCommon.c */,
+				7C7679D11518CA1B00C004A8 /* decContext.c */,
+				7C7679D21518CA1B00C004A8 /* decContext.h */,
+				7C7679D31518CA1B00C004A8 /* decDouble.c */,
+				7C7679D41518CA1B00C004A8 /* decDouble.h */,
+				7C7679D51518CA1B00C004A8 /* decDPD.h */,
+				7C7679D61518CA1B00C004A8 /* decimal32.c */,
+				7C7679D71518CA1B00C004A8 /* decimal32.h */,
+				7C7679D81518CA1B00C004A8 /* decimal64.c */,
+				7C7679D91518CA1B00C004A8 /* decimal64.h */,
+				7C7679DA1518CA1B00C004A8 /* decimal128.c */,
+				7C7679DB1518CA1B00C004A8 /* decimal128.h */,
+				7C7679DC1518CA1B00C004A8 /* decNumber.c */,
+				7C7679DD1518CA1B00C004A8 /* decNumber.h */,
+				7C7679DE1518CA1B00C004A8 /* decnumber.pdf */,
+				7C7679DF1518CA1B00C004A8 /* decNumberLocal.h */,
+				7C7679E01518CA1B00C004A8 /* decPacked.c */,
+				7C7679E11518CA1B00C004A8 /* decPacked.h */,
+				7C7679E21518CA1B00C004A8 /* decQuad.c */,
+				7C7679E31518CA1B00C004A8 /* decQuad.h */,
+				7C7679E41518CA1B00C004A8 /* decSingle.c */,
+				7C7679E51518CA1B00C004A8 /* decSingle.h */,
+				7C7679EE1518CA1B00C004A8 /* ICU-license.html */,
+				7C7679EF1518CA1B00C004A8 /* readme.txt */,
+			);
+			name = decNumber;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		7C7679811518C33A00C004A8 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7C7679F61518CA1B00C004A8 /* decContext.h in Headers */,
+				7C7679FA1518CA1B00C004A8 /* decDouble.h in Headers */,
+				7C7679FC1518CA1B00C004A8 /* decDPD.h in Headers */,
+				7C767A001518CA1B00C004A8 /* decimal32.h in Headers */,
+				7C767A041518CA1B00C004A8 /* decimal64.h in Headers */,
+				7C767A081518CA1B00C004A8 /* decimal128.h in Headers */,
+				7C767A0C1518CA1B00C004A8 /* decNumber.h in Headers */,
+				7C767A0E1518CA1B00C004A8 /* decNumberLocal.h in Headers */,
+				7C767A121518CA1B00C004A8 /* decPacked.h in Headers */,
+				7C767A161518CA1B00C004A8 /* decQuad.h in Headers */,
+				7C767A1A1518CA1B00C004A8 /* decSingle.h in Headers */,
+				7C767A2D1518CA2800C004A8 /* decnumber.hpp in Headers */,
+				7C9587981518E11000A759A5 /* decimal in Headers */,
+				7C9587C11518FA7800A759A5 /* decnumberfunc.x.hpp in Headers */,
+				7C6CFA921529ADEF001259BF /* decnumber_test_gen.x.hpp in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7C7679961518C36800C004A8 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7C7679F71518CA1B00C004A8 /* decContext.h in Headers */,
+				7C7679FB1518CA1B00C004A8 /* decDouble.h in Headers */,
+				7C7679FD1518CA1B00C004A8 /* decDPD.h in Headers */,
+				7C767A011518CA1B00C004A8 /* decimal32.h in Headers */,
+				7C767A051518CA1B00C004A8 /* decimal64.h in Headers */,
+				7C767A091518CA1B00C004A8 /* decimal128.h in Headers */,
+				7C767A0D1518CA1B00C004A8 /* decNumber.h in Headers */,
+				7C767A0F1518CA1B00C004A8 /* decNumberLocal.h in Headers */,
+				7C767A131518CA1B00C004A8 /* decPacked.h in Headers */,
+				7C767A171518CA1B00C004A8 /* decQuad.h in Headers */,
+				7C767A1B1518CA1B00C004A8 /* decSingle.h in Headers */,
+				7C767A2E1518CA2800C004A8 /* decnumber.hpp in Headers */,
+				7C9587991518E11000A759A5 /* decimal in Headers */,
+				7C9587C21518FA7800A759A5 /* decnumberfunc.x.hpp in Headers */,
+				7C6CFA931529ADEF001259BF /* decnumber_test_gen.x.hpp in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		7C7679821518C33A00C004A8 /* decnumberxx_ios */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7C7679901518C33A00C004A8 /* Build configuration list for PBXNativeTarget "decnumberxx_ios" */;
+			buildPhases = (
+				7C76797F1518C33A00C004A8 /* Sources */,
+				7C7679801518C33A00C004A8 /* Frameworks */,
+				7C7679811518C33A00C004A8 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = decnumberxx_ios;
+			productName = decnumberxx;
+			productReference = 7C7679831518C33A00C004A8 /* libdecnumberxx_ios.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		7C7679931518C36800C004A8 /* decnumberxx_osx */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7C7679971518C36800C004A8 /* Build configuration list for PBXNativeTarget "decnumberxx_osx" */;
+			buildPhases = (
+				7C7679941518C36800C004A8 /* Sources */,
+				7C7679951518C36800C004A8 /* Frameworks */,
+				7C7679961518C36800C004A8 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = decnumberxx_osx;
+			productName = decnumberxx;
+			productReference = 7C76799A1518C36800C004A8 /* libdecnumberxx_osx.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7C76797A1518C33A00C004A8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = Hypnocode;
+			};
+			buildConfigurationList = 7C76797D1518C33A00C004A8 /* Build configuration list for PBXProject "decnumberxx" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7C7679781518C33A00C004A8;
+			productRefGroup = 7C7679841518C33A00C004A8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7C7679821518C33A00C004A8 /* decnumberxx_ios */,
+				7C7679931518C36800C004A8 /* decnumberxx_osx */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7C76797F1518C33A00C004A8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7C7679F41518CA1B00C004A8 /* decContext.c in Sources */,
+				7C7679F81518CA1B00C004A8 /* decDouble.c in Sources */,
+				7C7679FE1518CA1B00C004A8 /* decimal32.c in Sources */,
+				7C767A021518CA1B00C004A8 /* decimal64.c in Sources */,
+				7C767A061518CA1B00C004A8 /* decimal128.c in Sources */,
+				7C767A0A1518CA1B00C004A8 /* decNumber.c in Sources */,
+				7C767A101518CA1B00C004A8 /* decPacked.c in Sources */,
+				7C767A141518CA1B00C004A8 /* decQuad.c in Sources */,
+				7C767A181518CA1B00C004A8 /* decSingle.c in Sources */,
+				7C767A301518CA4300C004A8 /* decnumber_checks.cpp in Sources */,
+				7C9587CD151A0DE900A759A5 /* decnumber_test.cpp in Sources */,
+				7CDCA240151C7B5100BA232B /* decnumber_funcs.cpp in Sources */,
+				7C6CFA721525B27B001259BF /* decnumber_funcs64.cpp in Sources */,
+				7C6CFA891525D1C7001259BF /* decnumber_funcs32.cpp in Sources */,
+				7C6CFA8A1525D1C7001259BF /* decnumber_funcs128.cpp in Sources */,
+				7C6CFA8F1529A810001259BF /* decnumber_test64.cpp in Sources */,
+				7C6CFA951529BB10001259BF /* decnumber_test128.cpp in Sources */,
+				7C116B661529CDE5005B74F5 /* decnumber_test32.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7C7679941518C36800C004A8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7C7679F51518CA1B00C004A8 /* decContext.c in Sources */,
+				7C7679F91518CA1B00C004A8 /* decDouble.c in Sources */,
+				7C7679FF1518CA1B00C004A8 /* decimal32.c in Sources */,
+				7C767A031518CA1B00C004A8 /* decimal64.c in Sources */,
+				7C767A071518CA1B00C004A8 /* decimal128.c in Sources */,
+				7C767A0B1518CA1B00C004A8 /* decNumber.c in Sources */,
+				7C767A111518CA1B00C004A8 /* decPacked.c in Sources */,
+				7C767A151518CA1B00C004A8 /* decQuad.c in Sources */,
+				7C767A191518CA1B00C004A8 /* decSingle.c in Sources */,
+				7C767A311518CA4300C004A8 /* decnumber_checks.cpp in Sources */,
+				7C9587CE151A0DE900A759A5 /* decnumber_test.cpp in Sources */,
+				7CDCA241151C7B5100BA232B /* decnumber_funcs.cpp in Sources */,
+				7C6CFA741525B499001259BF /* decnumber_funcs64.cpp in Sources */,
+				7C6CFA8C1525D1CE001259BF /* decnumber_funcs32.cpp in Sources */,
+				7C6CFA8D1525D1D2001259BF /* decnumber_funcs128.cpp in Sources */,
+				7C6CFA901529A810001259BF /* decnumber_test64.cpp in Sources */,
+				7C6CFA961529BB10001259BF /* decnumber_test128.cpp in Sources */,
+				7C116B671529CDE5005B74F5 /* decnumber_test32.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		7C76798E1518C33A00C004A8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_UNUSED_VALUE = NO;
+				HEADER_SEARCH_PATHS = ../libcxx/include;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		7C76798F1518C33A00C004A8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_PREPROCESSOR_DEFINITIONS = NDEBUG;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VALUE = NO;
+				HEADER_SEARCH_PATHS = ../libcxx/include;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		7C7679911518C33A00C004A8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
+				DSTROOT = /tmp/decnumberxx.dst;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "i386 armv6 armv7";
+			};
+			name = Debug;
+		};
+		7C7679921518C33A00C004A8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
+				DSTROOT = /tmp/decnumberxx.dst;
+				IPHONEOS_DEPLOYMENT_TARGET = 3.0;
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "i386 armv6 armv7";
+			};
+			name = Release;
+		};
+		7C7679981518C36800C004A8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				DSTROOT = /tmp/decnumberxx.dst;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OTHER_CFLAGS = "-U__STRICT_ANSI__";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = decnumberxx_osx;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		7C7679991518C36800C004A8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				DSTROOT = /tmp/decnumberxx.dst;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				OTHER_CFLAGS = "-U__STRICT_ANSI__";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = decnumberxx_osx;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7C76797D1518C33A00C004A8 /* Build configuration list for PBXProject "decnumberxx" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7C76798E1518C33A00C004A8 /* Debug */,
+				7C76798F1518C33A00C004A8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7C7679901518C33A00C004A8 /* Build configuration list for PBXNativeTarget "decnumberxx_ios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7C7679911518C33A00C004A8 /* Debug */,
+				7C7679921518C33A00C004A8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7C7679971518C36800C004A8 /* Build configuration list for PBXNativeTarget "decnumberxx_osx" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7C7679981518C36800C004A8 /* Debug */,
+				7C7679991518C36800C004A8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7C76797A1518C33A00C004A8 /* Project object */;
+}
