@@ -76,6 +76,7 @@
 /* Begin PBXFileReference section */
 		7C116B651529CDE5005B74F5 /* decnumber_test32.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = decnumber_test32.cpp; sourceTree = "<group>"; };
 		7C116B69152AFE0C005B74F5 /* readme.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = readme.html; sourceTree = "<group>"; };
+		7C116B9A152C7427005B74F5 /* README.md */ = {isa = PBXFileReference; explicitFileType = text.html.documentation; path = README.md; sourceTree = "<group>"; };
 		7C6CFA711525B27B001259BF /* decnumber_funcs64.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = decnumber_funcs64.cpp; sourceTree = "<group>"; };
 		7C6CFA871525D1C7001259BF /* decnumber_funcs32.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = decnumber_funcs32.cpp; sourceTree = "<group>"; };
 		7C6CFA881525D1C7001259BF /* decnumber_funcs128.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = decnumber_funcs128.cpp; sourceTree = "<group>"; };
@@ -137,6 +138,7 @@
 		7C7679781518C33A00C004A8 = {
 			isa = PBXGroup;
 			children = (
+				7C116B9A152C7427005B74F5 /* README.md */,
 				7C116B69152AFE0C005B74F5 /* readme.html */,
 				7C9587971518E10F00A759A5 /* decimal */,
 				7C9587C01518FA7800A759A5 /* decnumberfunc.x.hpp */,
