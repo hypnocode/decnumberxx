@@ -99,7 +99,6 @@
 		7C7679DB1518CA1B00C004A8 /* decimal128.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = decimal128.h; path = decNumber/decimal128.h; sourceTree = "<group>"; };
 		7C7679DC1518CA1B00C004A8 /* decNumber.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = decNumber.c; path = decNumber/decNumber.c; sourceTree = "<group>"; };
 		7C7679DD1518CA1B00C004A8 /* decNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = decNumber.h; path = decNumber/decNumber.h; sourceTree = "<group>"; };
-		7C7679DE1518CA1B00C004A8 /* decnumber.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = decnumber.pdf; path = decNumber/decnumber.pdf; sourceTree = "<group>"; };
 		7C7679DF1518CA1B00C004A8 /* decNumberLocal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = decNumberLocal.h; path = decNumber/decNumberLocal.h; sourceTree = "<group>"; };
 		7C7679E01518CA1B00C004A8 /* decPacked.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = decPacked.c; path = decNumber/decPacked.c; sourceTree = "<group>"; };
 		7C7679E11518CA1B00C004A8 /* decPacked.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = decPacked.h; path = decNumber/decPacked.h; sourceTree = "<group>"; };
@@ -182,7 +181,6 @@
 				7C7679DB1518CA1B00C004A8 /* decimal128.h */,
 				7C7679DC1518CA1B00C004A8 /* decNumber.c */,
 				7C7679DD1518CA1B00C004A8 /* decNumber.h */,
-				7C7679DE1518CA1B00C004A8 /* decnumber.pdf */,
 				7C7679DF1518CA1B00C004A8 /* decNumberLocal.h */,
 				7C7679E01518CA1B00C004A8 /* decPacked.c */,
 				7C7679E11518CA1B00C004A8 /* decPacked.h */,
