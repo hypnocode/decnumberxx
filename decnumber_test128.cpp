@@ -85,4 +85,12 @@ void std_decimal_test_decimal128 (void)
 	stream << std::numeric_limits<decimal128>::max();
 	assert (stream.str () == "9.999999999999999999999999999999999E+6144");
   }
+
+  assert (DEC128_MANT_DIG == std::numeric_limits<decimal128>::digits);
+  assert (DEC128_MIN_EXP == std::numeric_limits<decimal128>::min_exponent);
+  assert (DEC128_MAX_EXP == std::numeric_limits<decimal128>::max_exponent);
+  assert (DEC128_MAX == std::numeric_limits<decimal128>::max ());
+  assert (DEC128_MIN == std::numeric_limits<decimal128>::min ());
+  assert (DEC128_EPSILON == std::numeric_limits<decimal128>::epsilon ());
+  assert (DEC128_SUBNORMAL == std::numeric_limits<decimal128>::denorm_min ());
 }

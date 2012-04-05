@@ -1159,3 +1159,14 @@ _Decimal128 test_24_0 (_Decimal32 a, _Decimal64 b)
 {
   return a + b;
 }
+
+// ----------------------------------------------------------------
+// check that DEC_EVAL_METHOD is defined and in the specified range
+int test_25_0 (void)
+{
+  static_assert (DEC_EVAL_METHOD == -1
+  				 || DEC_EVAL_METHOD == 0
+				 || DEC_EVAL_METHOD == 1
+				 || DEC_EVAL_METHOD == 2, "DEC_EVAL_METHOD bad range");
+  return DEC_EVAL_METHOD;
+}

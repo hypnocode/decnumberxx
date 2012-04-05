@@ -85,4 +85,12 @@ void std_decimal_test_decimal64 (void)
 	stream << std::numeric_limits<decimal64>::max();
 	assert (stream.str () == "9.999999999999999E+384");
   }
+
+  assert (DEC64_MANT_DIG == std::numeric_limits<decimal64>::digits);
+  assert (DEC64_MIN_EXP == std::numeric_limits<decimal64>::min_exponent);
+  assert (DEC64_MAX_EXP == std::numeric_limits<decimal64>::max_exponent);
+  assert (DEC64_MAX == std::numeric_limits<decimal64>::max ());
+  assert (DEC64_MIN == std::numeric_limits<decimal64>::min ());
+  assert (DEC64_EPSILON == std::numeric_limits<decimal64>::epsilon ());
+  assert (DEC64_SUBNORMAL == std::numeric_limits<decimal64>::denorm_min ());
 }

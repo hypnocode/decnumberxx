@@ -12,6 +12,7 @@ which has its own <a href="decNumber/ICU-license.html">license</a>.
 <p>
 <h4><i><u>Notice 0</u></i></h4>
 This requires a C++11 supporting compiler and STL.<br>
+It is not meant to be used with plain C code.<br>
 On iOS and OSX it is recommended to use a more recent version of libcxx than is shipped with OSX 10.7 and iOS 5.0.
 </p>
 
@@ -163,8 +164,8 @@ is then converted to <code>decimal32</code>. This works, but is slow.
 	  	<code>#define DEC128_MANT_DIG</code>
 	  </td>
 	  <td align="center">3.4.1</td>
-      <td align="center" bgcolor="#FFCCCC">No</td>
-	  <td><code>numeric_limits</code> only.</td>
+      <td align="center" bgcolor="#A0FFA0">Yes</td>
+	  <td>Uses <code>std::numeric_limits</code></td>
 	</tr>
 
 	<tr>
@@ -174,8 +175,8 @@ is then converted to <code>decimal32</code>. This works, but is slow.
 	    <code>#define DEC128_MIN_EXP</code>
 	  </td>
 	  <td align="center">3.4.1</td>
-      <td align="center" bgcolor="#FFCCCC">No</td>
-	  <td><code>numeric_limits</code> only.</td>
+      <td align="center" bgcolor="#A0FFA0">Yes</td>
+	  <td>Uses <code>std::numeric_limits</code></td>
 	</tr>
 
 	<tr>
@@ -185,8 +186,8 @@ is then converted to <code>decimal32</code>. This works, but is slow.
 	    <code>#define DEC128_MAX_EXP</code>
 	  </td>
 	  <td align="center">3.4.1</td>
-      <td align="center" bgcolor="#FFCCCC">No</td>
-	  <td><code>numeric_limits</code> only.</td>
+      <td align="center" bgcolor="#A0FFA0">Yes</td>
+	  <td>Uses <code>std::numeric_limits</code></td>
 	</tr>
 
 	<tr>
@@ -197,7 +198,7 @@ is then converted to <code>decimal32</code>. This works, but is slow.
 	  </td>
 	  <td align="center">3.4.2</td>
       <td align="center" bgcolor="#F0F0A0">Partial</td>
-	  <td>C++ only.  Uses <code>#define</code> instead of <code>typedef</code>.</td>
+	  <td>Uses <code>#define</code> instead of <code>typedef</code></td>
 	</tr>
 
 	<tr>
@@ -207,8 +208,8 @@ is then converted to <code>decimal32</code>. This works, but is slow.
 		<code>#define DEC128_MAX</code>
 	  </td>		  
 	  <td align="center">3.4.3</td>
-      <td align="center" bgcolor="#FFCCCC">No</td>
-	  <td><code>numeric_limits</code> only.</td>
+      <td align="center" bgcolor="#A0FFA0">Yes</td>
+	  <td>Uses <code>std::numeric_limits</code></td>
 	</tr>
 
 	<tr>
@@ -218,8 +219,8 @@ is then converted to <code>decimal32</code>. This works, but is slow.
 	    <code>#define DEC128_EPSILON</code>
 	  </td>
 	  <td align="center">3.4.4</td>
-      <td align="center" bgcolor="#FFCCCC">No</td>
-	  <td><code>numeric_limits</code> only.</td>
+      <td align="center" bgcolor="#A0FFA0">Yes</td>
+	  <td>Uses <code>std::numeric_limits</code></td>
 	</tr>
 
 	<tr>
@@ -229,8 +230,8 @@ is then converted to <code>decimal32</code>. This works, but is slow.
 	    <code>#define DEC128_MIN</code>
 	  </td>
 	  <td align="center">3.4.5</td>
-      <td align="center" bgcolor="#FFCCCC">No</td>
-	  <td><code>numeric_limits</code> only.</td>
+      <td align="center" bgcolor="#A0FFA0">Yes</td>
+	  <td>Uses <code>std::numeric_limits</code></td>
 	</tr>
 
 	<tr>
@@ -240,15 +241,15 @@ is then converted to <code>decimal32</code>. This works, but is slow.
 	    <code>#define DEC128_SUBNORMAL</code>
 	  </td>
 	  <td align="center">3.4.6</td>
-      <td align="center" bgcolor="#FFCCCC">No</td>
-	  <td><code>numeric_limits</code> only.</td>
+      <td align="center" bgcolor="#A0FFA0">Yes</td>
+	  <td>Uses <code>std::numeric_limits</code></td>
 	</tr>
 
 	<tr>
 	  <td><code>#define DEC_EVAL_METHOD</code></td>
 	  <td align="center">3.4.7</td>
-      <td align="center" bgcolor="#FFCCCC">No</td>
-	  <td></td>
+      <td align="center" bgcolor="#A0FFA0">Yes</td>
+	  <td>Evaluates to <code>-1</code> (indeterminable)</td>
 	</tr>
 
 
@@ -688,8 +689,8 @@ is then converted to <code>decimal32</code>. This works, but is slow.
 	    <code>#define _Decimal128_t</code>
 	  </td>
 	  <td align="center">3.6.8.1</td>
-      <td align="center" bgcolor="#F0F0A0">Partial</td>
-	  <td>C++ only.</td>
+      <td align="center" bgcolor="#A0FFA0">Yes</td>
+	  <td></td>
 	</tr>
 
 

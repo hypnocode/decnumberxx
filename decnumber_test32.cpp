@@ -85,4 +85,12 @@ void std_decimal_test_decimal32 (void)
 	stream << std::numeric_limits<decimal32>::max();
 	assert (stream.str () == "9.999999E+96");
   }
+  
+  assert (DEC32_MANT_DIG == std::numeric_limits<decimal32>::digits);
+  assert (DEC32_MIN_EXP == std::numeric_limits<decimal32>::min_exponent);
+  assert (DEC32_MAX_EXP == std::numeric_limits<decimal32>::max_exponent);
+  assert (DEC32_MAX == std::numeric_limits<decimal32>::max ());
+  assert (DEC32_MIN == std::numeric_limits<decimal32>::min ());
+  assert (DEC32_EPSILON == std::numeric_limits<decimal32>::epsilon ());
+  assert (DEC32_SUBNORMAL == std::numeric_limits<decimal32>::denorm_min ());
 }

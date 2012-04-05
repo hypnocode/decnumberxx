@@ -1810,5 +1810,32 @@ class numeric_limits<decimal::decnumber<T>>
 
 // #endif // __decnumber__impl__
 
+#define DEC32_MANT_DIG std::numeric_limits<std::decimal::decimal32>::digits
+#define DEC32_MIN_EXP std::numeric_limits<std::decimal::decimal32>::min_exponent
+#define DEC32_MAX_EXP std::numeric_limits<std::decimal::decimal32>::max_exponent
+#define DEC32_MAX std::numeric_limits<std::decimal::decimal32>::max ()
+#define DEC32_EPSILON std::numeric_limits<std::decimal::decimal32>::epsilon ()
+#define DEC32_MIN std::numeric_limits<std::decimal::decimal32>::min ()
+#define DEC32_SUBNORMAL std::numeric_limits<std::decimal::decimal32>::denorm_min ()
+
+#define DEC64_MANT_DIG std::numeric_limits<std::decimal::decimal64>::digits
+#define DEC64_MIN_EXP std::numeric_limits<std::decimal::decimal64>::min_exponent
+#define DEC64_MAX_EXP std::numeric_limits<std::decimal::decimal64>::max_exponent
+#define DEC64_MAX std::numeric_limits<std::decimal::decimal64>::max ()
+#define DEC64_EPSILON std::numeric_limits<std::decimal::decimal64>::epsilon ()
+#define DEC64_MIN std::numeric_limits<std::decimal::decimal64>::min ()
+#define DEC64_SUBNORMAL std::numeric_limits<std::decimal::decimal64>::denorm_min ()
+
+#define DEC128_MANT_DIG std::numeric_limits<std::decimal::decimal128>::digits
+#define DEC128_MIN_EXP std::numeric_limits<std::decimal::decimal128>::min_exponent
+#define DEC128_MAX_EXP std::numeric_limits<std::decimal::decimal128>::max_exponent
+#define DEC128_MAX std::numeric_limits<std::decimal::decimal128>::max ()
+#define DEC128_EPSILON std::numeric_limits<std::decimal::decimal128>::epsilon ()
+#define DEC128_MIN std::numeric_limits<std::decimal::decimal128>::min ()
+#define DEC128_SUBNORMAL std::numeric_limits<std::decimal::decimal128>::denorm_min ()
+
+#define DEC_EVAL_METHOD -1
+
+
 #endif // __cplusplus	
 #endif // __decnumberxx_decimal__
