@@ -291,14 +291,15 @@ is then converted to <code>decimal32</code>. This works, but is slow.
 	<tr>
 	  <td><code>fe_dec_getround</code> function</td>
 	  <td align="center">3.5.3</td>
-      <td align="center" bgcolor="#FFCCCC">No</td>
-	  <td>Requires thread local decNumber context storage.  Rounding mode is fixed to <code>FE_DEC_TONEAREST</code>.</td>
+      <td align="center" bgcolor="#F0F0A0">Partial</td>
+	  <td>Returns always <code>FE_DEC_TONEAREST</code>, since the rounding mode is fixed.</td>
 	</tr>
 	<tr>
 	  <td><code>fe_dec_setround</code> function</td>
 	  <td align="center">3.5.4</td>
-      <td align="center" bgcolor="#FFCCCC">No</td>
-	  <td>Requires thread local decNumber context storage.  Rounding mode is fixed to <code>FE_DEC_TONEAREST</code>.</td>
+      <td align="center" bgcolor="#F0F0A0">Partial</td>
+	  <td>Returns <code>0</code> only when setting <code>FE_DEC_TONEAREST</code>, since the rounding mode
+	      is fixed to <code>FE_DEC_TONEAREST</code>. Would actually require thread local decNumber context storage.</td>
 	</tr>
 
     <tr class="separator">

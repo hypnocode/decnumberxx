@@ -1170,3 +1170,42 @@ int test_25_0 (void)
 				 || DEC_EVAL_METHOD == 2, "DEC_EVAL_METHOD bad range");
   return DEC_EVAL_METHOD;
 }
+
+// ----------------------------------------------------------------
+// check that FE_DEC_DOWNWARD, FE_DEC_TONEAREST, FE_DEC_TOWARD_ZERO,
+// FE_DEC_UPWARD are defined
+int test_26_0 (void)
+{
+  static_assert (FE_DEC_DOWNWARD != FE_DEC_TONEAREST, "FE_DEC_DOWNWARD is same as FE_DEC_TONEAREST");
+  static_assert (FE_DEC_DOWNWARD != FE_DEC_TOWARD_ZERO, "FE_DEC_DOWNWARD is same as FE_DEC_TOWARD_ZERO");
+  static_assert (FE_DEC_DOWNWARD != FE_DEC_UPWARD, "FE_DEC_DOWNWARD is same as FE_DEC_UPWARD");
+
+  static_assert (FE_DEC_TONEAREST != FE_DEC_TOWARD_ZERO, "FE_DEC_TONEAREST is same as FE_DEC_TOWARD_ZERO");
+  static_assert (FE_DEC_TONEAREST != FE_DEC_UPWARD, "FE_DEC_TONEAREST is same as FE_DEC_UPWARD");
+  
+  static_assert (FE_DEC_TOWARD_ZERO != FE_DEC_UPWARD, "FE_DEC_TOWARD_ZERO is same as FE_DEC_UPWARD");
+
+  return 0;
+}
+
+
+// ----------------------------------------------------------------
+// check the presence of fe_dec_getround and fe_dec_setround
+int test_27_0 (void)
+{
+  return fe_dec_getround ();
+}
+int test_27_1 (void)
+{
+  return std::decimal::fe_dec_getround ();
+}
+
+int test_27_2 (void)
+{
+  return fe_dec_setround (FE_DEC_DOWNWARD);
+}
+
+int test_27_3 (void)
+{
+  return std::decimal::fe_dec_setround (FE_DEC_DOWNWARD);
+}
