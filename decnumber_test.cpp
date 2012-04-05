@@ -1150,3 +1150,12 @@ decimal32 test_23_1 (void)
 {
   return std::decimal::make_decimal32 (4, 5);
 }
+
+
+// ----------------------------------------------------------------
+// using _Decimal32, _Decimal64, _Decimal128
+
+_Decimal128 test_24_0 (_Decimal32 a, _Decimal64 b)
+{
+  return a + b;
+}

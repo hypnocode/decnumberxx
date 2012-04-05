@@ -34,6 +34,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef __decnumberxx_decimal__
 #define __decnumberxx_decimal__
 
+#ifdef __cplusplus
+
 #include <string>
 #include <sstream>
 #include <iostream>
@@ -1794,7 +1796,19 @@ class numeric_limits<decimal::decnumber<T>>
 #endif // __decnumber__impl__
 
 } // namespace std
-	
-	
-	
+
+
+//#ifndef __decnumber__impl__
+
+#define _Decimal32 std::decimal::decimal32
+#define _Decimal64 std::decimal::decimal64
+#define _Decimal128 std::decimal::decimal128
+
+#define _Decimal32_t std::decimal::decimal32_t
+#define _Decimal64_t std::decimal::decimal64_t
+#define _Decimal128_t std::decimal::decimal128_t
+
+// #endif // __decnumber__impl__
+
+#endif // __cplusplus	
 #endif // __decnumberxx_decimal__

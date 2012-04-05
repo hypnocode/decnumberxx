@@ -196,8 +196,8 @@ is then converted to <code>decimal32</code>. This works, but is slow.
 	    <code>_Decimal128</code> typedef
 	  </td>
 	  <td align="center">3.4.2</td>
-      <td align="center" bgcolor="#FFCCCC">No</td>
-	  <td></td>
+      <td align="center" bgcolor="#F0F0A0">Partial</td>
+	  <td>C++ only.  Uses <code>#define</code> instead of <code>typedef</code>.</td>
 	</tr>
 
 	<tr>
@@ -562,7 +562,7 @@ is then converted to <code>decimal32</code>. This works, but is slow.
 	<tr>
 	  <td><code>lgamma</code></td>	  <td align="center">3.6.7</td>
       <td align="center" bgcolor="#FFCCCC">No</td>
-	  <td>Inexact</td>
+	  <td></td>
 	</tr>
 	<tr>
 	  <td><code>llrint</code></td>	  <td align="center">3.6.7</td>
@@ -592,7 +592,7 @@ is then converted to <code>decimal32</code>. This works, but is slow.
 	<tr>
 	  <td><code>log2</code></td>	  <td align="center">3.6.7</td>
       <td align="center" bgcolor="#FFCCCC">No</td>
-	  <td>Inexact</td>
+	  <td></td>
 	</tr>
 	<tr>
 	  <td><code>logb</code></td>	  <td align="center">3.6.7</td>
@@ -688,8 +688,8 @@ is then converted to <code>decimal32</code>. This works, but is slow.
 	    <code>#define _Decimal128_t</code>
 	  </td>
 	  <td align="center">3.6.8.1</td>
-      <td align="center" bgcolor="#FFCCCC">No</td>
-	  <td></td>
+      <td align="center" bgcolor="#F0F0A0">Partial</td>
+	  <td>C++ only.</td>
 	</tr>
 
 
