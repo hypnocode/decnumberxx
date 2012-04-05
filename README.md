@@ -306,6 +306,37 @@ is then converted to <code>decimal32</code>. This works, but is slow.
     </tr>
 
 	<tr>
+	  <td><code>signbit</code></td>	  <td align="center">3.6</td>
+      <td align="center" bgcolor="#A0FFA0">Yes</td>
+	  <td></td>
+	</tr>
+	<tr>
+	  <td><code>fpclassify</code></td>	  <td align="center">3.6</td>
+      <td align="center" bgcolor="#FFCCCC">No</td>
+	  <td></td>
+	</tr>
+	<tr>
+	  <td><code>isinfinite</code></td>	  <td align="center">3.6</td>
+      <td align="center" bgcolor="#A0FFA0">Yes</td>
+	  <td></td>
+	</tr>
+	<tr>
+	  <td><code>isinf</code></td>	  <td align="center">3.6</td>
+      <td align="center" bgcolor="#A0FFA0">Yes</td>
+	  <td></td>
+	</tr>
+	<tr>
+	  <td><code>isnan</code></td>	  <td align="center">3.6</td>
+      <td align="center" bgcolor="#A0FFA0">Yes</td>
+	  <td></td>
+	</tr>
+	<tr>
+	  <td><code>isnormal</code></td>	  <td align="center">3.6</td>
+      <td align="center" bgcolor="#A0FFA0">Yes</td>
+	  <td></td>
+	</tr>
+ 
+	<tr>
 	  <td>
 	    <code>#define HUGE_VAL_D32</code><br>
 	    <code>#define HUGE_VAL_D64</code><br>
