@@ -856,7 +856,8 @@ is then converted to <code>decimal32</code>. This works, but is slow.
       <th align="center" colspan="4" bgcolor="#D0D0D0">4.1 Literals</th>
     </tr>
 	<tr>
-	  <td>Decimal floating point literals with <code>DF</code> suffix.</td>
+	  <td>Decimal floating point literals with <code>df DF dd DD dl DL</code> suffixes
+	      as <a href="http://gcc.gnu.org/onlinedocs/gcc/Decimal-Float.html">suggested by GCC</a>.</td>
 	  <td align="center"></td>
       <td align="center" bgcolor="#FFCCCC">No</td>
 	  <td>Requires C++11 user defined literals.</td>
