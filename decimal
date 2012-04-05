@@ -938,8 +938,25 @@ expand_make_decimal (32)
 expand_make_decimal (64)
 expand_make_decimal (128)
 
-
 #undef expand_make_decimal
+
+
+// 3.2.6 conversions
+#define expand_to(__width__)\
+static inline long long decimal ## __width__ ## _to_long_long (const decimal ## __width__& __d) noexcept { return (long long)__d; }\
+static inline long long decimal_to_long_long (const decimal ## __width__& __d) noexcept { return (long long)__d; }\
+static inline float decimal ## __width__ ## _to_float (const decimal ## __width__& __d) noexcept { return (float)__d; }\
+static inline float decimal_to_float (const decimal ## __width__& __d) noexcept { return (float)__d; }\
+static inline double decimal ## __width__ ## _to_double (const decimal ## __width__& __d) noexcept { return (double)__d; }\
+static inline double decimal_to_double (const decimal ## __width__& __d) noexcept { return (double)__d; }\
+static inline long double decimal ## __width__ ## _to_long_double (const decimal ## __width__& __d) noexcept { return (long double)__d; }\
+static inline long double decimal_to_long_double (const decimal ## __width__& __d) noexcept { return (long double)__d; }\
+
+expand_to (32)
+expand_to (64)
+expand_to (128)
+
+#undef expand_to
 
 #endif // __decnumber__impl__
 

@@ -903,22 +903,26 @@ is then converted to <code>decimal32</code>. This works, but is slow.
 
 	<tr>
 	  <td>
+	    <code><code>decimal_to_long_long</code><br>
 	    <code><code>decimal_to_float</code><br>
 	    <code><code>decimal_to_double</code><br>
 	    <code><code>decimal_to_long_double</code><br>
+	    <code><code>decimal32_to_long_long</code><br>
 	    <code><code>decimal32_to_float</code><br>
 	    <code><code>decimal32_to_double</code><br>
 	    <code><code>decimal32_to_long_double</code><br>
+	    <code><code>decimal64_to_long_long</code><br>
 	    <code><code>decimal64_to_float</code><br>
 	    <code><code>decimal64_to_double</code><br>
 	    <code><code>decimal64_to_long_double</code><br>
+	    <code><code>decimal128_to_long_long</code><br>
 	    <code><code>decimal128_to_float</code><br>
 	    <code><code>decimal128_to_double</code><br>
 	    <code><code>decimal128_to_long_double</code><br>
 	  </td>
 	  <td align="center"></td>
-      <td align="center" bgcolor="#FFCCCC">No</td>
-	  <td>Implemented via C++11 explicit conversion operators, which makes these functions obsolete for C++. See 3.2.6.</td>
+      <td align="center" bgcolor="#A0FFA0">Yes</td>
+	  <td>Implemented via C++11 explicit conversion operators.</td>
 	</tr>
 
 </table>

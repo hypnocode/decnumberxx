@@ -471,6 +471,45 @@ static const decimaltype& test_83 (void)
 	return x;
 }
 
+#define to_func(__t__, __f__) __concat(__t__, __f__)
+
+static long long test_181_0 (decimaltype a)
+{
+  return std::decimal:: to_func (decimaltype, _to_long_long) (a);
+}
+static long long test_181_1 (decimaltype a)
+{
+  return std::decimal:: to_func (decimal, _to_long_long) (a);
+}
+
+static float test_182_0 (decimaltype a)
+{
+  return std::decimal:: to_func (decimaltype, _to_float) (a);
+}
+static float test_182_1 (decimaltype a)
+{
+  return std::decimal:: to_func (decimal, _to_float) (a);
+}
+
+static double test_183_0 (decimaltype a)
+{
+  return std::decimal:: to_func (decimaltype, _to_double) (a);
+}
+static double test_183_1 (decimaltype a)
+{
+  return std::decimal:: to_func (decimal, _to_double) (a);
+}
+
+static long double test_184_0 (decimaltype a)
+{
+  return std::decimal:: to_func (decimaltype, _to_long_double) (a);
+}
+static long double test_184_1 (decimaltype a)
+{
+  return std::decimal:: to_func (decimal, _to_long_double) (a);
+}
+
+
 #if 0
 
 static constexpr decimaltype constexpr_add (decimaltype a, decimaltype b)
@@ -640,6 +679,18 @@ static void test_func (decimaltype) (void)
 	assert (test_178 (2, 2, 2, 2) == 0);
 	assert (test_179 (2, 2, 4, 2) == 1);
 	assert (test_180 (2, 2, 2, 6) == 1);
+	
+	assert (test_181_0 (decimaltype (42) == 42));
+	assert (test_181_1 (decimaltype (42) == 42));
+
+	assert (test_182_0 (decimaltype (42) == 42));
+	assert (test_182_1 (decimaltype (42) == 42));
+
+	assert (test_183_0 (decimaltype (42) == 42));
+	assert (test_183_1 (decimaltype (42) == 42));
+
+	assert (test_184_0 (decimaltype (42) == 42));
+	assert (test_184_1 (decimaltype (42) == 42));
 
 	static const decimaltype sc = decimaltype (5.5f);
 	assert ( test_83() == sc );
